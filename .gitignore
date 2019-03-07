@@ -1,0 +1,9 @@
+.DS_Store
+*.o
+*.bin
+*.elf
+*.list
+*.text
+*.d
+*.a
+*.exe
