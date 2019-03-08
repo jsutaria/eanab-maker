@@ -33,9 +33,11 @@ Theo: Develop software to record user preferences, send user preferences to Rasp
 * 4x Bottle spouts
 * Red solo cups
 * Beverage components
-* 3x Servo Motors
-* 3x Steper Motors
-* 3D-printed drink dispenser and conveyor belt
+* 1x Servo Motors
+* 1x Stepper Motors
+* 3D-printed drink dispenser
+* Conveyor Belt
+* 80/20 Extrusion
 
 ## Funds:
 We'll likely surpass our combined reimbursement of $60 for the project, so we'll probably request that amount and chip in a bit ourselves to cover the difference.
