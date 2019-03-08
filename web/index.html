@@ -1,0 +1,283 @@
+<html>
+  <head>
+    <title>EANAB Maker</title>
+    <style>
+      body {
+        background-color: black;
+        background-image: radial-gradient(rgba(0, 40, 0, 0.75), black 120%);
+        margin: 0;
+        padding: 0;
+        color: white;
+        font: 1.3rem Inconsolata, monospace;
+        text-shadow: 0 0 5px #C8C8C8;
+      }
+      body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+        pointer-events: none;
+      }
+
+      .root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .left, .right {
+        max-width: 420px;
+      }
+
+      .left {
+        margin-right: 2em;
+      }
+
+      #action {
+        height: 40px;
+      }
+
+      button {
+        font: 1.3rem Inconsolata, monospace;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    </style>
+
+    <style>
+      table {
+          border-collapse: collapse;
+
+          -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+          -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none;
+
+          display: inline-block;
+
+      }
+
+      td, th {
+          border: 1px solid lightgray;
+          padding: 10px;
+          margin: 0;
+      }
+
+      td {
+        white-space: nowrap;
+      }
+
+      .adjust-button {
+          width: 20px;
+          height: 20px;
+          font-size: 20px;
+          line-height: 20px;
+          text-align: center;
+          display: inline-block;
+          border: 1px solid grey;
+          border-radius: 5px;
+          margin: 1px;
+          cursor: pointer;
+      }
+
+      var {
+          width: 40px;
+          display: inline-block;
+      }
+
+      #piechart-instructions, .note {
+        font-size: 0.75em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="root">
+      <div class="left">
+        <p>EANAB Maker Concierge<br>=====================</p>
+        <p>Customize your drink of choice for the night, then click the button below and swipe your Stanford ID card.</p>
+        <p>Your drink preference will be loaded onto your card, and you can visit the EANAB Maker at any time to get a fresh cup.</p>
+        <p>So, what'll it be?</p>
+        <p>
+          <div id="action"></div>
+        </p>
+        <p>---------------------------------</p>
+        <p class="note">Want to change your drink of choice? You can always come back to the Concierge to update your preferences.</p>
+      </div>
+      <div class="right">
+        <form>
+          <div id="piechart-controls">
+              <canvas id="piechart" width="400" height="400">Your browser is too old!</canvas>
+              <br>
+              <table id="proportions-table"></table>
+              <br>
+              <p id="piechart-instructions">
+                  Drag the circles or click the buttons to adjust the mix. If an ingredient has gone,
+                  you can get it back by clicking its '+'.
+              </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      /*
+       * https://github.com/jamesalvarez/draggable-piechart
+       * MIT license
+       */
+      !function(){var e=function(e){var a,n,r,s=this;(e=function(e){e=e||{};for(var t=1;t<arguments.length;t++)if(arguments[t])for(var a in arguments[t])arguments[t].hasOwnProperty(a)&&(e[a]=arguments[t][a]);return e}({},this.defaults,e),this.canvas=e.canvas,this.context=e.canvas.getContext("2d"),this.context)?(e.proportions?this.data=(a=e.proportions,n=a.reduce(function(e,t){return e+t.proportion},0),r=0,a.map(function(e,a){var s=t*e.proportion/n,l={angle:r,format:e.format,collapsed:s<=0};return r=i(r+s),l})):e.data&&(this.data=e.data),this.draggedPie=null,this.hoveredIndex=-1,this.radius=e.radius,this.collapsing=e.collapsing,this.minAngle=e.minAngle,this.drawSegment=e.drawSegment,this.drawNode=e.drawNode,this.onchange=e.onchange,"ontouchstart"in window||navigator.maxTouchPoints?(this.canvas.addEventListener("touchstart",l),this.canvas.addEventListener("touchmove",o),document.addEventListener("touchend",d)):(this.canvas.addEventListener("mousedown",l),this.canvas.addEventListener("mousemove",o),document.addEventListener("mouseup",d)),this.draw()):console.log("Error: DraggablePiechart needs an html5 canvas.");function l(e){s.draggedPie=s.getTarget(g(e)),s.draggedPie&&(s.hoveredIndex=s.draggedPie.index)}function d(){s.draggedPie&&(s.draggedPie=null,s.draw())}function o(e){var t=g(e);if(s.draggedPie){var a=s.draggedPie,n=t.x-a.centerX,i=t.y-a.centerY,r=Math.atan2(i,n)-a.angleOffset;s.shiftSelectedAngle(r),s.draw()}else{var l=s.getTarget(t);l?(s.hoveredIndex=l.index,s.draw()):-1!=s.hoveredIndex&&(s.hoveredIndex=-1,s.draw())}}function g(e){var t=s.canvas.getBoundingClientRect();return e.clientX?{x:e.clientX-t.left,y:e.clientY-t.top}:{x:e.originalEvent.targetTouches[0].clientX-t.left,y:e.originalEvent.targetTouches[0].clientY-t.top}}};e.prototype.moveAngle=function(e,t){if(this.data[e].collapsed&&t<0)this.setCollapsed(e,!1);else{var a=this.getGeometry();this.draggedPie={index:e,angleOffset:0,centerX:a.centerX,centerY:a.centerY,startingAngles:this.data.map(function(e){return e.angle}),collapsed:this.data.map(function(e){return e.collapsed}),angleDragDistance:0},this.shiftSelectedAngle(this.data[e].angle+t),this.draggedPie=null,this.draw()}},e.prototype.getSliceSizePercentage=function(e){for(var a=this.getVisibleSegments(),n=0;n<a.length;n+=1)if(a[n].index==e)return 100*a[n].arcSize/t;return 0},e.prototype.getAllSliceSizePercentages=function(){for(var e=this.getVisibleSegments(),a=[],n=0;n<this.data.length;n+=1)if(this.data[n].collapsed)a[n]=0;else for(var i=0;i<e.length;i+=1)e[i].index==n&&(a[n]=100*e[i].arcSize/t);return a},e.prototype.getGeometry=function(){var e=Math.floor(this.canvas.width/2),t=Math.floor(this.canvas.height/2);return{centerX:e,centerY:t,radius:Math.min(e,t)*this.radius}},e.prototype.getTarget=function(e){for(var t=this.getGeometry(),n=[],i=[],r={index:-1,distance:9999999,angle:null},s=0;s<this.data.length;s+=1)if(n.push(this.data[s].angle),i.push(this.data[s].collapsed),!this.data[s].collapsed){var l=e.x-t.centerX,d=e.y-t.centerY,o=Math.atan2(d,l),g=Math.abs(a(o,this.data[s].angle));g<r.distance&&(r.index=s,r.distance=g,r.angle=o)}return r.distance<.1?{index:r.index,angleOffset:a(r.angle,n[r.index]),centerX:t.centerX,centerY:t.centerY,startingAngles:n,collapsed:i,angleDragDistance:0}:null},e.prototype.setCollapsed=function(e,t){var r=this.data[e].collapsed&&!t;this.data[e].collapsed=t;for(var s=this.getVisibleSegments(),l=0;l<s.length;l+=1)if(s[l].index==e){if(r){var d=s[n(l+1,s.length)];this.data[e].angle=d.angle-this.minAngle}for(var o=0;o<s.length-1;o+=1){var g=s[n(1+l-o,s.length)],h=s[n(l-o,s.length)];Math.abs(a(this.data[g.index].angle,this.data[h.index].angle))<this.minAngle&&(this.data[h.index].angle=i(this.data[g.index].angle-this.minAngle))}break}this.draw()},e.prototype.getVisibleSegments=function(){for(var e=[],a=0;a<this.data.length;a+=1)if(!this.data[a].collapsed){for(var n=this.data[a].angle,i=!1,r=1;r<this.data.length;r+=1){var s=(a+r)%this.data.length;if(!this.data[s].collapsed){var l=this.data[s].angle-n;l<=0&&(l+=t),e.push({arcSize:l,angle:n,format:this.data[a].format,index:a}),i=!0;break}}if(!i){e.push({arcSize:t,angle:n,format:this.data[a].format,index:a});break}}return e},e.prototype.getInvisibleSegments=function(){for(var e=[],t=0;t<this.data.length;t+=1)this.data[t].collapsed&&e.push({index:t,format:this.data[t].format});return e},e.prototype.draw=function(){var e=this.context,t=this.canvas;e.clearRect(0,0,t.width,t.height);for(var a=this.getGeometry(),i=this.getVisibleSegments(),r=0,s=-1,l=0;l<i.length;l+=1)i[l].arcSize>r&&(r=i[l].arcSize,s=l);for(l=0;l<i.length;l+=1){var d=n(l+s+1,i.length);this.drawSegment(e,this,a.centerX,a.centerY,a.radius,i[d].angle,i[d].arcSize,i[d].format,!1)}var o,g,h=this.getInvisibleSegments();for(l=0;l<h.length;l+=1)this.drawSegment(e,this,a.centerX,a.centerY,a.radius,0,0,h[l].format,!0);for(l=0;l<i.length;l+=1){var c=(o=i[l].angle,{x:(g=a.radius)*Math.cos(o),y:g*Math.sin(o)});this.drawNode(e,this,c.x,c.y,a.centerX,a.centerY,l==this.hoveredIndex)}this.onchange(this)},e.prototype.shiftSelectedAngle=function(e){if(this.draggedPie){var r=this.draggedPie,s=r.startingAngles[r.index],l=(this.data[r.index].angle,a(e,s)),d=r.angleDragDistance,o=d>0?1:-1,g=d>0==l>0;Math.abs(d-l)>Math.PI&&!g?l=(t-Math.abs(l))*o:o=l>0?1:-1,r.angleDragDistance=l,this.data[r.index].angle=i(s+l),this.data[r.index].collapsed=r.collapsed[r.index];for(var h=!0,c=!1,f=this.minAngle,u=0,v=1;v<this.data.length;v+=1){var p=n(parseInt(r.index)+v*o,this.data.length),m=a(r.startingAngles[p],s);if(m*o<0&&(m=(m*o+t)*o),this.collapsing){this.data[p].collapsed=r.collapsed[p];var x=!c&&!this.data[p].collapsed;x&&m>0&&l>m-f?(this.data[r.index].angle=this.data[p].angle,this.data[r.index].collapsed=!0,c=!0):x&&m<0&&l<m+f?(this.data[r.index].angle=this.data[p].angle,this.data[p].collapsed=!0,c=!0):this.data[p].angle=r.startingAngles[p]}else{var S=(u+1)*f;h&&m>0&&l>m-S?(this.data[p].angle=i(r.startingAngles[p]+(l-m)+S),u+=1):h&&m<0&&l<m+S?(this.data[p].angle=i(r.startingAngles[p]-(m-l)-S),u+=1):(h=!1,this.data[p].angle=r.startingAngles[p])}}}},e.prototype.defaults={onchange:function(e){},radius:.9,data:[{angle:-2,format:{color:"#2665da",label:"Walking"},collapsed:!1},{angle:-1,format:{color:"#6dd020",label:"Programming"},collapsed:!1},{angle:0,format:{color:"#f9df18",label:"Chess"},collapsed:!1},{angle:1,format:{color:"#d42a00",label:"Eating"},collapsed:!1},{angle:2,format:{color:"#e96400",label:"Sleeping"},collapsed:!1}],collapsing:!1,minAngle:.1,drawSegment:function(e,t,a,n,i,r,s,l,d){if(!d){e.save();var o=r+s;e.beginPath(),e.moveTo(a,n),e.arc(a,n,i,r,o,!1),e.closePath(),e.fillStyle=l.color,e.fill(),e.restore(),e.save(),e.translate(a,n),e.rotate(r);var g=Math.floor(e.canvas.height/25),h=i-g,c=n/10;e.textAlign="right",e.font=g+"pt Helvetica",e.fillText(l.label,h,c),e.restore()}},drawNode:function(e,a,n,i,r,s,l){e.save(),e.translate(r,s),e.fillStyle="#DDDDDD";var d=l?7:5;e.beginPath(),e.arc(n,i,d,0,t,!0),e.fill(),e.stroke(),e.restore()}},window.DraggablePiechart=e;var t=2*Math.PI;function a(e,t){return Math.atan2(Math.sin(e-t),Math.cos(e-t))}function n(e,t){return(e%t+t)%t}function i(e){return n(e+Math.PI,t)-Math.PI}}();
+    </script>
+
+    <script>
+      var dimensions = ['Ingred. A', 'Ingred. B', 'Ingred. C', 'Ingred. D'];
+      var randomProportions = generateRandomProportions(dimensions.length, 0.05);
+      var proportions = dimensions.map(function(d,i) { return {
+          label: d,
+          proportion: randomProportions[i],
+          collapsed: false,
+          format: {
+              label: d.charAt(0).toUpperCase() + d.slice(1) // capitalise first letter
+          }
+      }});
+
+
+      var setup = {
+          canvas: document.getElementById('piechart'),
+          radius: 0.9,
+          collapsing: true,
+          proportions: proportions,
+          drawSegment: drawSegmentOutlineOnly,
+          onchange: onPieChartChange
+      };
+
+      var newPie = new DraggablePiechart(setup);
+
+      function drawSegmentOutlineOnly(context, piechart, centerX, centerY, radius, startingAngle, arcSize, format, collapsed) {
+
+          if (collapsed) { return; }
+
+          // Draw segment
+          context.save();
+          var endingAngle = startingAngle + arcSize;
+          context.beginPath();
+          context.moveTo(centerX, centerY);
+          context.arc(centerX, centerY, radius, startingAngle, endingAngle, false);
+          context.closePath();
+
+          context.fillStyle = '#f5f5f5';
+          context.fill();
+          context.stroke();
+          context.restore();
+
+          // Draw label on top
+          context.save();
+          context.translate(centerX, centerY);
+          context.rotate(startingAngle);
+
+          var fontSize = Math.floor(context.canvas.height / 25);
+          var dx = radius - fontSize;
+          var dy = centerY / 10;
+
+          context.textAlign = "right";
+          context.font = fontSize + "pt Inconsolata, monospace";
+          context.fillText(format.label, dx, dy);
+          context.restore();
+      }
+
+      function onPieChartChange(piechart) {
+
+          var table = document.getElementById('proportions-table');
+          var percentages = piechart.getAllSliceSizePercentages();
+
+          var labelsRow = '<tr>';
+          var propsRow = '<tr>';
+          for(var i = 0; i < proportions.length; i += 1) {
+              labelsRow += '<th>' + proportions[i].format.label + '</th>';
+
+              var v = '<var>' + percentages[i].toFixed(0) + '%</var>';
+              var plus = '<div id="plu-' + dimensions[i] + '" class="adjust-button" data-i="' + i + '" data-d="-1">&#43;</div>';
+              var minus = '<div id="min-' + dimensions[i] + '" class="adjust-button" data-i="' + i + '" data-d="1">&#8722;</div>';
+              propsRow += '<td>' + v + plus + minus + '</td>';
+          }
+          labelsRow += '</tr>';
+          propsRow += '</tr>';
+
+          table.innerHTML = labelsRow + propsRow;
+
+          var adjust = document.getElementsByClassName("adjust-button");
+
+          function adjustClick(e) {
+              var i = this.getAttribute('data-i');
+              var d = this.getAttribute('data-d');
+
+              piechart.moveAngle(i, (d * 0.1));
+          }
+
+          for (i = 0; i < adjust.length; i++) {
+              adjust[i].addEventListener('click', adjustClick);
+          }
+
+      }
+
+      /*
+       * Generates n proportions with a minimum percentage gap between them
+       */
+      function generateRandomProportions(n, min) {
+          var rnd = Array.apply(null, {length: n}).map(function(){ return Math.random(); });
+          var rndTotal = rnd.reduce(function(a, v) { return a + v; }, 0);
+          return validateAndCorrectProportions(rnd.map(function(v) { return v / rndTotal; }), min);
+
+          function validateAndCorrectProportions(proportions, min) {
+              var sortedProportions = proportions.sort(function(a,b){return a - b});
+
+              for (var i = 0; i < sortedProportions.length; i += 1) {
+                  if (sortedProportions[i] < min) {
+                      var diff = min - sortedProportions[i];
+                      sortedProportions[i] += diff;
+                      sortedProportions[sortedProportions.length - 1] -= diff;
+                      return validateAndCorrectProportions(sortedProportions, min);
+                  }
+              }
+
+              return sortedProportions;
+          }
+      }
+
+
+      /**
+       * Action handler
+       */
+      var ACTION_BUTTON = `<button onclick="actionSubmit()">Ok, I've made my choices</button>`;
+      var ACTION_PENDING = "Loading...";
+      var ACTION_SWIPE = "<< Swipe your card now >>";
+      var ACTION_CONFIRMED = "You're ready to drink!<br>[Resetting the Concierge...]";
+
+      var el = document.getElementById("action");
+      el.innerHTML = ACTION_BUTTON;
+
+      function actionSubmit() {
+        el.innerHTML = ACTION_PENDING;
+
+        setTimeout(function () {
+          el.innerHTML = ACTION_SWIPE;
+
+          setTimeout(function () {
+            el.innerHTML = ACTION_CONFIRMED;
+
+            setTimeout(function () {
+              el.innerHTML = ACTION_BUTTON;
+            }, 2000);
+
+          }, 2000);
+
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
