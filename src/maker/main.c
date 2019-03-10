@@ -1,7 +1,6 @@
 #include "printf.h"
 #include "uart.h"
 #include "timer.h"
-#include "keyboard.h"
 #include "magstripe.h"
 
 void main(void) 

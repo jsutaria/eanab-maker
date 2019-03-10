@@ -1,5 +1,5 @@
 NAME = main
-OBJECTS = src/magstripe.o
+OBJECTS = src/common/magstripe.o
 
 CFLAGS  = -Iinclude -I$(CS107E)/include -g -Wall -Wpointer-arith
 CFLAGS += -Og -std=c99 -ffreestanding
@@ -24,13 +24,16 @@ all : $(NAME).bin
 %.list: %.o
 	arm-none-eabi-objdump  --no-show-raw-insn -d $< > $@
 
-install: $(NAME).bin
+install-m: src/maker/$(NAME).bin
+	rpi-install.py -p $<
+
+install-c: src/concierge/$(NAME).bin
 	rpi-install.py -p $<
 
 clean:
 	rm -f *.o *.bin *.elf *.list *~
 
-.PHONY: all clean install
+.PHONY: all clean install-m install-c
 
 .PRECIOUS: %.o %.elf
 
