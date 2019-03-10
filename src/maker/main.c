@@ -16,7 +16,7 @@ void main(void)
     magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     interrupts_global_enable();
 
-    printf("Hello, world!\n");
+    printf("Hello from the maker!\n");
 
     while (1) {
         // Swipe ==> start pipeline for drink prep

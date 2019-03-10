@@ -9,7 +9,7 @@ void main(void)
 {
     timer_init();
     uart_init();
-    communicator_init(COMMUNICATOR_MODE_MAKER);
+    communicator_init(COMMUNICATOR_MODE_CONCIERGE);
     magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     interrupts_global_enable();
 
