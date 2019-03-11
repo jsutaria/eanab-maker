@@ -33,6 +33,7 @@ storage_ingredients_t * storage_get_key(char *key)
 
 void storage_put_key(char *key, storage_ingredients_t* ingredients)
 {
+    // fixme: add support for overwriting an existing key
     store[stored_entries].key = key;
     store[stored_entries].ingredients = ingredients;
     stored_entries++;

@@ -7,7 +7,7 @@
 #define STORAGE_USER_LENGTH 16
 #define STORAGE_INGREDIENTS_LENGTH 10
 
-// An ingredient is an unsigned value ranging from 0 (not included at all)
+// An ingredient is an unsigned value ranging from 1 (not included at all)
 // to 255 (included, to the point of being 100% of beverage).
 typedef unsigned char storage_ingredients_t;
 

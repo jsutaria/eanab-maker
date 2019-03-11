@@ -78,8 +78,9 @@ void communicator_process_transmission(char* transmission)
 {
     communicator_transmission_mode_t mode = *transmission++; // consume first byte
 
-    if (mode == COMMUNICATOR_TRANSMISSION_MODE_MAKER_UPDATE) {
-
+    if (communicator_mode == COMMUNICATOR_MODE_MAKER &&
+        mode == COMMUNICATOR_TRANSMISSION_MODE_MAKER_UPDATE)
+    {
         char *user = malloc(STORAGE_USER_LENGTH);
         for (int i = 0; *transmission != COMMUNICATOR_SENTINEL; i++) {
             user[i] = *transmission++;
@@ -96,8 +97,9 @@ void communicator_process_transmission(char* transmission)
         storage_put_key(user, ingredients);
         printf("saved drink: %s => %s!\n", user, ingredients);
 
-    } else if (mode == COMMUNICATOR_TRANSMISSION_MODE_CONCIERGE_CLIENT_MESSAGE) {
-
+    } else if (communicator_mode == COMMUNICATOR_MODE_CONCIERGE &&
+        mode == COMMUNICATOR_TRANSMISSION_MODE_CONCIERGE_CLIENT_MESSAGE)
+    {
         storage_ingredients_t *ingredients = malloc(STORAGE_INGREDIENTS_LENGTH);
         memset(ingredients, '\0', STORAGE_INGREDIENTS_LENGTH);
         for (int i = 0; *transmission; i++) {

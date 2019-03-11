@@ -1,4 +1,4 @@
-// #define DEBUG
+#define DEBUG
 
 #include <WiFi.h>
 #include <WebSocketServer.h>

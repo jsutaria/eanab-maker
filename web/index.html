@@ -1,6 +1,14 @@
 <html>
   <head>
     <title>EANAB Maker</title>
+
+    <script>
+      var ENDPOINT = '192.168.4.1';
+      var START_SENTINEL = '%';
+      var END_SENTINEL = '$';
+      var MODE = 'c';
+    </script>
+
     <style>
       body {
         background-color: black;
@@ -253,7 +261,7 @@
       /**
        * Action handler
        */
-      var ACTION_BUTTON = `<button onclick="actionSubmit()">Ok, I've made my choices</button>`;
+      var ACTION_BUTTON = `<button onclick="actionSubmit()">Save configured beverage</button>`;
       var ACTION_PENDING = "Loading...";
       var ACTION_SWIPE = "<< Swipe your card now >>";
       var ACTION_CONFIRMED = "You're ready to drink!<br>[Resetting the Concierge...]";
@@ -261,7 +269,17 @@
       var el = document.getElementById("action");
       el.innerHTML = ACTION_BUTTON;
 
+      function serializeIngredientRequest() {
+        var percentages = newPie.getAllSliceSizePercentages();
+        return `${START_SENTINEL}${MODE}${percentages.map(p => String.fromCharCode(Math.max(Math.round(p * 255), 1))).join('')}${END_SENTINEL}`;
+      }
+
       function actionSubmit() {
+        fetch(`http://${ENDPOINT}/`, {
+          method: 'POST',
+          body: serializeIngredientRequest()
+        });
+
         el.innerHTML = ACTION_PENDING;
 
         setTimeout(function () {
