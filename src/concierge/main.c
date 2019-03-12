@@ -24,7 +24,8 @@ void main(void)
         magstripe_card_t *card = magstripe_read_next_card();
 
         // fixme: ack card read to UI
-        printf("Roger, looks like %s wants to save their drink!\n", card->track_2->pan);
+        char *user = card->track_2->pan;
+        printf("Roger, looks like %s wants to save their drink!\n", user);
 
         communicator_send_drink(card->track_2->pan, ingredients);
 
