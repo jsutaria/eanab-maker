@@ -18,6 +18,12 @@ void valves_init() {
   }
 }
 
+void test_on_off() {
+  gpio_write(VALVE_1, 1);
+  timer_delay(3);
+  gpio_write(VALVE_1, 0);
+}
+
 void turn_on_valves(storage_ingredients_t *ingredients) {
   for (int i = 0; i < 4; i++) {
     gpio_write(VALVE_1 + i, 1);
