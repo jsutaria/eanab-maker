@@ -20,16 +20,16 @@
 |  9 MISO   |  ADC      |
 | 10 MOSI   |  ADC      |
 | 11 SCLK   |  ADC      |
-| 12 PWM0   |           |
+| 12 PWM0   |  Stepper  |
 | 13 PWM1   |           |
 | 14 TXD    |  UART     |
 | 15 RXD    |  UART     |
-| 16        |           |   
+| 16        |  Stepper  |   
 | 17        |           |
 | 18 PWM0   |           |
 | 19 MISO   |           |
-| 20 MOSI   |           |
-| 21 SCLK   |           |
+| 20 MOSI   |  Stepper  |
+| 21 SCLK   |  Stepper  |
 | 22        |           |
 | 23        |           |
 | 24        |           |
