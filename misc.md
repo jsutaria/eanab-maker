@@ -11,8 +11,8 @@
 |  0 ID_SD  |           |
 |  1 ID_SD  |           |
 |  2 SDA    |           |
-|  3 SCL    |           |   
-|  4 GPCLK0 |           |
+|  3 SCL    | Magstripe |   
+|  4 GPCLK0 | Magstripe |
 |  5        |           |
 |  6        |           |
 |  7 CE1    |           |
