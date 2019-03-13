@@ -8,6 +8,8 @@
  */
 void valves_init();
 
+void test_on_off();
+
 /*
  * Turns on all valves for a given time according to concentration
  */
