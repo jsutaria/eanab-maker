@@ -1,6 +1,7 @@
 #include "printf.h"
 #include "uart.h"
 #include "timer.h"
+#include "keyboard.h"
 #include "magstripe.h"
 #include "interrupts.h"
 #include "malloc.h"
@@ -11,9 +12,9 @@ void main(void)
 {
     timer_init();
     uart_init();
+    magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     storage_init();
     communicator_init(COMMUNICATOR_MODE_MAKER);
-    magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     interrupts_global_enable();
 
     printf("Hello from the maker!\n");
@@ -23,9 +24,9 @@ void main(void)
         magstripe_card_t *card = magstripe_read_next_card();
 
         // fixme: temporarily set to 123 for testing
-        // char *user = card->track_2->pan;
-        char *user = malloc(5);
-        user = "123";
+        // char *user = malloc(5);
+        // user = "123";
+        char *user = card->track_2->pan;
 
         printf("Looks like %s wants to get a drink!\n", user);
 

@@ -4,13 +4,15 @@
 #include "interrupts.h"
 #include "magstripe.h"
 #include "communicator.h"
+#include "storage.h"
 
 void main(void) 
 {
     timer_init();
     uart_init();
-    communicator_init(COMMUNICATOR_MODE_CONCIERGE);
     magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
+    storage_init();
+    communicator_init(COMMUNICATOR_MODE_CONCIERGE);
     interrupts_global_enable();
 
     printf("Hello from the concierge!\n");

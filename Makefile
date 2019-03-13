@@ -25,10 +25,10 @@ all : $(NAME).bin
 	arm-none-eabi-objdump  --no-show-raw-insn -d $< > $@
 
 install-m: src/maker/$(NAME).bin
-	rpi-install.py -s $<
+	rpi-install.py -p $<
 
 install-c: src/concierge/$(NAME).bin
-	rpi-install.py -s $<
+	rpi-install.py -p $<
 
 install-t: src/test/$(NAME).bin
 	rpi-install.py -p $<
@@ -36,7 +36,7 @@ install-t: src/test/$(NAME).bin
 clean:
 	rm -f *.o *.bin *.elf *.list *~
 
-.PHONY: all clean install-m install-c
+.PHONY: all clean install-m install-c install-t
 
 .PRECIOUS: %.o %.elf
 

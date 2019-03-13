@@ -9,7 +9,7 @@
 
 // An ingredient is an unsigned value ranging from 1 (not included at all)
 // to 255 (included, to the point of being 100% of beverage).
-typedef unsigned char storage_ingredients_t;
+typedef const unsigned char storage_ingredients_t;
 
 typedef struct {
     char *key; // [STORAGE_USER_LENGTH]
