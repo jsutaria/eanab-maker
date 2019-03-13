@@ -5,6 +5,11 @@
 #define DRUNK_THRESHOLD 80
 static unsigned int adc_channel;
 
+int readVals(void) {
+    int total = 0;
+    for(int i = 0; i < 100; i++) total+= mcp3008_read(adc_channel);
+    return total/100;
+}
 
 void breathalyzer_init(unsigned int adc_channel_num)
 {
