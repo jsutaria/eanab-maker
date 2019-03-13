@@ -7,4 +7,4 @@
 *.d
 *.a
 *.exe
-src/test/*
+src/test/*.*
