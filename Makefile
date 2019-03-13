@@ -1,5 +1,5 @@
 NAME = main
-OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o src/common/stepper.o
+OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o src/common/stepper.o src/common/valve.o
 
 CFLAGS  = -Iinclude -I$(CS107E)/include -g -Wall -Wpointer-arith
 CFLAGS += -Og -std=c99 -ffreestanding
