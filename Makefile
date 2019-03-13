@@ -1,5 +1,5 @@
 NAME = main
-OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o
+OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o src/common/stepper.o
 
 CFLAGS  = -Iinclude -I$(CS107E)/include -g -Wall -Wpointer-arith
 CFLAGS += -Og -std=c99 -ffreestanding
@@ -29,6 +29,9 @@ install-m: src/maker/$(NAME).bin
 
 install-c: src/concierge/$(NAME).bin
 	rpi-install.py -s $<
+
+install-t: src/test/$(NAME).bin
+	rpi-install.py -p $<
 
 clean:
 	rm -f *.o *.bin *.elf *.list *~

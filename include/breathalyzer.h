@@ -3,4 +3,6 @@
 
 void breathalyzer_init();
 
+void breathalyzer_read(void);
+
 #endif
