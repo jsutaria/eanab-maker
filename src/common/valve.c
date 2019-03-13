@@ -24,15 +24,15 @@ void test_on_off() {
   gpio_write(VALVE_1, 0);
 }
 
-void turn_on_valves(storage_ingredients_t *ingredients) {
+void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
   for (int i = 0; i < 4; i++) {
     gpio_write(VALVE_1 + i, 1);
   }
 
-  int time_1 = ingredients[0];
-  int time_2 = ingredients[1];
-  int time_3 = ingredients[2];
-  int time_4 = ingredients[3];
+  // int time_1 = ingredients[0];
+  // int time_2 = ingredients[1];
+  // int time_3 = ingredients[2];
+  // int time_4 = ingredients[3];
 
 
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {

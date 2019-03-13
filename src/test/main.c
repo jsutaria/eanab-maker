@@ -5,6 +5,12 @@
 
 void main(void) {
     uart_init();
-    stepper_init(GPIO_PIN19, GPIO_PIN16, GPIO_PIN20, GPIO_PIN21);
     printf("Hello, world!\n");
+
+    valves_init();
+
+    printf("Testing ")
+    turn_on_valves(100, 100, 100, 100);
+    //stepper_init(GPIO_PIN19, GPIO_PIN16, GPIO_PIN20, GPIO_PIN21);
+    //stepper_test();
 }
