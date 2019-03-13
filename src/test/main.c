@@ -11,9 +11,9 @@ void main(void) {
     uart_init();
     printf("Hello, worlds!\n");
 
-    stepper_init();
+    stepper_init(STEPPER_PIN1, STEPPER_PIN2, STEPPER_PIN3, STEPPER_PIN4);
 
-    while(1) turnStepper(1, NUMSTEPS_90);
+    while(1) turnStepper(FORWARDS, NUMSTEPS_90);
 
 
     // mcp3008_init();

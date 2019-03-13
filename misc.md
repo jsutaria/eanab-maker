@@ -12,10 +12,10 @@
 |  1 ID_SD  |           |
 |  2 SDA    |           |
 |  3 SCL    |           |   
-|  4 GPCLK0 |           |
-|  5        |           |
-|  6        |           |
-|  7 CE1    |           |
+|  4 GPCLK0 |  Valves   |
+|  5        |  Valves   |
+|  6        |  Valves   |
+|  7 CE1    |  Valves   |
 |  8 CE0    |  ADC      |
 |  9 MISO   |  ADC      |
 | 10 MOSI   |  ADC      |

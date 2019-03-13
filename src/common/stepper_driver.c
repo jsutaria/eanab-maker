@@ -10,34 +10,34 @@
 #define NUMSTEPS_FACE_OVER 162
 #define NUMSTEPS_FACE_UNDER 34
 
-unsigned int inputArray[4] = { 	GPIO_PIN12,
-								GPIO_PIN16,
-								GPIO_PIN20,
-								GPIO_PIN21
-								};
+static unsigned int pin_map[NUM_GPIO_PINS];
 
-void stepper_init() {
-	gpio_init();
-	gpio_set_output(inputArray[0]);
-	gpio_set_output(inputArray[1]);
-	gpio_set_output(inputArray[2]);
-	gpio_set_output(inputArray[3]);
+void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4) {
+		gpio_init();
+
+		pin_map[0] = pin_1;
+		pin_map[1] = pin_2;
+		pin_map[2] = pin_3;
+		pin_map[3] = pin_4;
+
+		gpio_set_output(pin_1);
+		gpio_set_output(pin_2);
+		gpio_set_output(pin_3);
+		gpio_set_output(pin_4);
 }
 
 void stepStepper(unsigned int direction){
-
-	unsigned int bitPattern;
-	for(int i = 0; i < NUM_ITERATIONS; i++){
-		if(direction){
-			bitPattern = 1 << (NUM_ITERATIONS - i - 1);
-		} else {
-			bitPattern = 1 << i;
+		unsigned int bitPattern;
+		for(int i = 0; i < 4; i++) {
+				if(direction == FORWARDS) bitPattern = 1 << (NUM_ITERATIONS - i - 1);
+				else bitPattern = 1 << i;
 		}
+
 		for(int j = 0; j < NUM_GPIO_PINS; j++){
 			if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >>  (NUM_GPIO_PINS - j - 1)){
-				gpio_write(inputArray[j], HIGH);
+				gpio_write(pin_map[j], HIGH);
 			} else {
-				gpio_write(inputArray[j], LOW);
+				gpio_write(pin_map[j], LOW);
 			}
 		}
 		timer_delay_ms(2);
@@ -45,29 +45,12 @@ void stepStepper(unsigned int direction){
 }
 
 void turnStepper(unsigned int direction, unsigned int numTimes) {
-
 	for (int j = 0; j < numTimes; j++) {
-		for(int i = 0; i < NUMSTEPS_90; i++){
-			stepStepper(direction);
-		}
-		timer_delay_ms(1000);
-	}
-}
-
-void turnStepperFace(unsigned int direction, unsigned int numTimes){
-	for (int j = 0; j < numTimes; j++) {
-		for(int i = 0; i < NUMSTEPS_FACE_OVER; i++){
-			stepStepper(direction);
-		}
-		for(int i = 0; i < NUMSTEPS_FACE_UNDER; i++){
-			stepStepper(!direction);
-		}
+		for(int i = 0; i < NUMSTEPS_90; i++) stepStepper(direction);
 		timer_delay_ms(1000);
 	}
 }
 
 void turnStepperAngle(unsigned int direction, unsigned int angle){
-	for(int i = 0; i < 1.42*angle; i++){
-		stepStepper(direction);
-	}
+	for(int i = 0; i < 1024 / 720 * angle; i++) stepStepper(direction);
 }
