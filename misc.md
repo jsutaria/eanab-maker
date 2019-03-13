@@ -30,8 +30,8 @@
 | 19 MISO   |           |
 | 20 MOSI   |  Stepper  |
 | 21 SCLK   |  Stepper  |
-| 22        |           |
-| 23        |           |
+| 22        |  TAJ      |
+| 23        |  TAJ      |
 | 24        |           |
 | 25        |           |
 | 26        |           |
