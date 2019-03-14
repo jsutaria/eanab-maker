@@ -5,27 +5,43 @@
 #include "timer.h"
 #include "valve.h"
 #include "mcp3008.h"
+#include "breathalyzer.h"
+#include "button.h"
 
 
 void main(void) {
     uart_init();
     printf("Hello, worlds!\n");
 
-    stepper_init(STEPPER_PIN1, STEPPER_PIN2, STEPPER_PIN3, STEPPER_PIN4);
+    button_init(GPIO_PIN17);
+    wait_for_press();
+    // while (1) {
+    //   wait_for_press();
+    // }
 
-    while(1) turnStepper(FORWARDS, NUMSTEPS_90);
 
 
     // mcp3008_init();
+
+
+
+    // stepper_init(STEPPER_PIN1, STEPPER_PIN2, STEPPER_PIN3, STEPPER_PIN4);
     //
-    // while(1) {
-    //   int val = readVals();
-    //   int RS = (1024.0 - val) * 1000 / val;
-    //   int R0 = RS / 60.0;
-    //   printf("%d %d", RS, R0);
-    //   timer_delay(1);
-    //   printf("\n");
-    // }
+    // while(1) turnStepper(FORWARDS, NUMSTEPS_90);
+
+
+    // mcp3008_init();
+    breathalyzer_init(0);
+
+    while(1) {
+      printf("Value: %d\n", breathalyzer_read());
+      // int val = mcp3008_read(0);
+      // int RS = (1024.0 - val) * 1000 / val;
+      // int R0 = RS / 60.0;
+      // printf("%d %d", RS, R0);
+      // timer_delay(1);
+      // printf("\n");
+    }
     // valves_init();
     //
     // // printf("Testing on and off on gpio4\n");
