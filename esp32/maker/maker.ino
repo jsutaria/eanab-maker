@@ -14,7 +14,7 @@
 #define PS2_ECHO_CLOCK  (GPIO_NUM_4)
 #define PS2_ECHO_DATA  (GPIO_NUM_5)
 
-#define POLL_DELAY_MS 1000;
+#define POLL_DELAY_MS 1000
 
 // sync with <communicator.h>
 #define COMMUNICATOR_MAX_LEN 1024
@@ -22,24 +22,22 @@
 PS2dev pi(PS2_ECHO_CLOCK, PS2_ECHO_DATA);
 
 WiFiMulti wifiMulti;
-QueueList<String> receive_queue;
-QueueList<char> send_queue;
 
 const char* ssid         = "EANABMaker";
 const char* fetch_target = "http://eanab.local/read";
 
 void setup() {
 
-  // ----------
-  // UART SETUP
-  // ----------
+  // ------------
+  // SERIAL SETUP
+  // ------------
 
   Serial.begin(115200); // UART baud is 115,200 bps
-  xTaskCreate(ps2_echo_task, "ps2_echo_task", 1024, NULL, 10, NULL);
 
   // --------
   // WIFI SETUP
   // --------
+
   wifiMulti.addAP(ssid);
 
   Serial.println();
@@ -60,48 +58,48 @@ void setup() {
    Loop continuously polls for updated ingredients.
 */
 void loop() {
-  if (wifiMulti.run() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin(fetch_target);
-    if (http.GET() == HTTP_CODE_OK) {
-      String payload = http.getString();
-      receive_queue.push(payload);
-    } else {
-      Serial.println("No new ingredients!");
-    }
-  }
 
-  delay(POLL_DELAY_MS);
-}
-
-/**
-   Separate thread for uart transmission.
-*/
-static void ps2_echo_task(void *pvParameters)
-{
-  // Wait for the line to be ready
+  // Wait for the PS/2 line to be ready
   while (pi.write(0x00) != 0) {
-    delay(10);
+
+    #ifdef DEBUG
+      Serial.print("Waiting state:");
+      Serial.print(digitalRead(PS2_ECHO_CLOCK));
+      Serial.print(",");
+      Serial.print(digitalRead(PS2_ECHO_DATA));
+      Serial.println();
+    #endif
+
+    delay(100);
   }
 
   while (1) {
 
-    // Read character from pi if pending
-    unsigned char c;
-    if (digitalRead(PS2_ECHO_CLOCK) == LOW || digitalRead(PS2_ECHO_DATA) == LOW) {
-      while (pi.read(&c));
-      send_queue.push(c);
+    Serial.print("Polling now!");
+
+    if (wifiMulti.run() == WL_CONNECTED) {
+      HTTPClient http;
+      http.begin(fetch_target);
+      if (http.GET() == HTTP_CODE_OK) {
+
+        String str = http.getString();
+        const char *raw_str = str.c_str();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+          pi.write((unsigned char)raw_str[i]);
+          delay(20);
+        }
+
+        #ifdef DEBUG
+          Serial.print("Wrote to pi: ");
+          Serial.println(str);
+        #endif
+
+      } else {
+        Serial.println("No new ingredients!");
+      }
     }
 
-    // If there is anything in the receive queue (from WiFi), send it
-    if (!receive_queue.isEmpty()) {
-      String str = receive_queue.pop();
-      char *raw_str = str.c_str();
-      int len = str.length();
-      for (int i = 0; i < len; i++) pi.write(raw_str[i]);
-    }
-
-    // Delay to keep from flooding
-    delay(10);
+    delay(POLL_DELAY_MS);
   }
 }

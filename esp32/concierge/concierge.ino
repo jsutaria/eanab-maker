@@ -1,4 +1,4 @@
-#define DEBUG
+// #define DEBUG
 
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
@@ -28,12 +28,11 @@ const char* mdns_name = "eanab";
 
 void setup() {
 
-  // ----------
-  // UART SETUP
-  // ----------
+  // ------------
+  // SERIAL SETUP
+  // ------------
 
   Serial.begin(115200); // UART baud is 115,200 bps
-  // xTaskCreate(ps2_echo_task, "ps2_echo_task", 1024, NULL, 10, NULL);
 
   // ------------
   // SPIFFS SETUP
@@ -72,15 +71,16 @@ void setup() {
   /**
    * Handles POSTed ingredient configuration.
    */
-  // server.on("/", HTTP_POST, [](AsyncWebServerRequest * request) {
-  //   request->send(200);
-  // });
   server.onRequestBody([](AsyncWebServerRequest * request, uint8_t *data, size_t len, size_t index, size_t total) {
     String message = "";
     char *temp = (char *)data;
     for (int i = 0; i < len; i++) message += temp[i];
-    Serial.print("Received new request: ");
-    Serial.println(message);
+
+    #ifdef DEBUG
+      Serial.print("Received new request: ");
+      Serial.println(message);
+    #endif
+
     receive_queue.push(message);
     request->send(200);
   });
@@ -111,20 +111,19 @@ void setup() {
 
   delay(100);
 }
-void loop() {
-  Serial.print("A state:");
-  Serial.print(digitalRead(PS2_ECHO_CLOCK));
-  Serial.print(",");
-  Serial.print(digitalRead(PS2_ECHO_DATA));
-  Serial.println();
 
+void loop() {
   // Wait for the line to be ready
   while (pi.write(0x00) != 0) {
-    Serial.print("State:");
-    Serial.print(digitalRead(PS2_ECHO_CLOCK));
-    Serial.print(",");
-    Serial.print(digitalRead(PS2_ECHO_DATA));
-    Serial.println();
+
+    #ifdef DEBUG
+      Serial.print("Waiting state:");
+      Serial.print(digitalRead(PS2_ECHO_CLOCK));
+      Serial.print(",");
+      Serial.print(digitalRead(PS2_ECHO_DATA));
+      Serial.println();
+    #endif
+
     delay(100);
   }
 
@@ -132,22 +131,28 @@ void loop() {
 
   while (1) {
 
-    // Serial.print("A state:");
-    // Serial.print(digitalRead(PS2_ECHO_CLOCK));
-    // Serial.print(",");
-    // Serial.print(digitalRead(PS2_ECHO_DATA));
-    // Serial.println();
+    #ifdef DEBUG
+      Serial.print("Loop state:");
+      Serial.print(digitalRead(PS2_ECHO_CLOCK));
+      Serial.print(",");
+      Serial.print(digitalRead(PS2_ECHO_DATA));
+      Serial.println();
+    #endif
 
     // Read character from pi if pending
     unsigned char c;
     if (digitalRead(PS2_ECHO_CLOCK) == LOW || digitalRead(PS2_ECHO_DATA) == LOW) {
       pi.read(&c);
       send_queue.push(c);
-      Serial.println(c);
+
+      #ifdef DEBUG
+        Serial.println(c);
+      #endif
     }
 
     // If there is anything in the receive queue (from WiFi), send it
     if (!receive_queue.isEmpty()) {
+
       String str = receive_queue.pop();
       const char *raw_str = str.c_str();
       int len = str.length();
@@ -155,8 +160,12 @@ void loop() {
         pi.write((unsigned char)raw_str[i]);
         delay(20);
       }
-      Serial.print("Wrote to pi: ");
-      Serial.println(str);
+
+      #ifdef DEBUG
+        Serial.print("Wrote to pi: ");
+        Serial.println(str);
+      #endif
+
     }
 
     // Delay to keep from flooding
