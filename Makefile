@@ -34,6 +34,7 @@ install-t: src/test/$(NAME).bin
 	rpi-install.py -p $<
 
 clean:
+	git clean -fX
 	rm -f *.o *.bin *.elf *.list *~
 
 .PHONY: all clean install-m install-c install-t
