@@ -13,8 +13,6 @@
 static unsigned int pin_map[NUM_GPIO_PINS];
 
 void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4) {
-		gpio_init();
-
 		pin_map[0] = pin_1;
 		pin_map[1] = pin_2;
 		pin_map[2] = pin_3;
@@ -42,6 +40,7 @@ void stepStepper(unsigned int direction) {
 		}
 
 		timer_delay_ms(2);
+
 }
 
 void turnStepper(unsigned int direction, unsigned int numTimes) {

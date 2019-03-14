@@ -1,8 +1,12 @@
 #ifndef BREATHALYZER_H
 #define BREATHALYZER_H
 
-void breathalyzer_init();
+#define BREATHALYZER_CHANNEL 0
+
+void breathalyzer_init(unsigned int adc_channel_num);
 
 unsigned int breathalyzer_read(void);
+
+unsigned int detect_drunk(void);
 
 #endif
