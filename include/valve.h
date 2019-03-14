@@ -9,10 +9,10 @@
 #define VALVE_3 2
 #define VALVE_4 3
 
-#define VALVE_1_PIN GPIO_PIN4
-#define VALVE_2_PIN GPIO_PIN5
-#define VALVE_3_PIN GPIO_PIN6
-#define VALVE_4_PIN GPIO_PIN7
+#define VALVE_1_PIN GPIO_PIN6
+#define VALVE_2_PIN GPIO_PIN13
+#define VALVE_3_PIN GPIO_PIN19
+#define VALVE_4_PIN GPIO_PIN26
 
 /*
  * Initializes the valves by setting all pins to output
