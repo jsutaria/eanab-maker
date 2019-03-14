@@ -28,7 +28,7 @@ void all_valves_on() {
 }
 
 void all_valves_off() {
-    for(int valve = 0; valve < 4; valve++) valve_on(valve);
+    for(int valve = 0; valve < 4; valve++) valve_off(valve);
 }
 
 void valve_on(int valve) {
