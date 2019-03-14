@@ -1,6 +1,7 @@
 #include "gpio.h"
 #include "breathalyzer.h"
 #include "mcp3008.h"
+#include "timer.h"
 
 #define MAX_ALC 400
 #define DRUNK_THRESHOLD 80

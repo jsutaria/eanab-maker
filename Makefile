@@ -1,5 +1,5 @@
 NAME = main
-OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o src/common/stepper_driver.o src/common/valve.o src/common/mcp3008.o src/common/button.o src/common/breathalyzer.o
+OBJECTS = src/common/communicator.o src/common/magstripe.o src/common/storage.o src/common/stepper_driver.o src/common/valve.o src/common/mcp3008.o src/common/button.o src/common/breathalyzer.o src/common/button.o
 
 
 CFLAGS  = -Iinclude -I$(CS107E)/include -g -Wall -Wpointer-arith

@@ -1,6 +1,8 @@
 #include "gpio.h"
 #include "printf.h"
+#include "timer.h"
 #include "button.h"
+#include "uart.h"
 
 #define BUTTON_HOLD 500
 unsigned int button_pin;
