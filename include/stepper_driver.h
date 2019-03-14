@@ -14,10 +14,16 @@
 
 void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4);
 
-void stepStepper(unsigned int direction);
+void step_stepper(unsigned int direction);
 
-void turnStepper(unsigned int direction, unsigned int numTimes);
+void turn_stepper_angle(unsigned int direction, unsigned int angle);
 
-void turnStepperAngle(unsigned int direction, unsigned int angle);
+void turn_stepper_90(unsigned int direction);
+
+void turn_stepper_180(unsigned int direction);
+
+void turn_stepper_360(unsigned int direction);
+
+void turn_stepper_rotations(unsigned int direction, unsigned int rotations);
 
 #endif

@@ -57,7 +57,11 @@ void main(void) {
 }
 
 void stepper_test() {
-    while(1) turnStepper(FORWARDS, NUMSTEPS_90);
+    int i = 0;
+    while(1) {
+      turn_stepper_angle(FORWARDS, 15 * i++);
+      timer_delay(1);
+    }
 }
 
 void initialize(void) {
