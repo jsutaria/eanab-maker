@@ -21,22 +21,28 @@ void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, un
 		gpio_set_output(pin_4);
 }
 
-void step_stepper(unsigned int direction) {
-	unsigned int bitPattern;
-	for(int i = 0; i < NUM_ITERATIONS; i++){
-		if(direction == FORWARDS) bitPattern = 1 << (NUM_ITERATIONS - i - 1);
-		else bitPattern = 1 << i;
+void stepper_off() {
+		for(int i = 0; i < NUM_GPIO_PINS; i++) gpio_write(inputArray[i], LOW);
+}
 
-		for(int j = 0; j < NUM_GPIO_PINS; j++){
-			if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >> (NUM_GPIO_PINS - j - 1)){
+void step_stepper(unsigned int direction) {
+		unsigned int bitPattern;
+		for(int i = 0; i < NUM_ITERATIONS; i++) {
+			if(direction == FORWARDS) bitPattern = 1 << (NUM_ITERATIONS - i - 1);
+			else bitPattern = 1 << i;
+
+			for(int j = 0; j < NUM_GPIO_PINS; j++) {
+				if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >> (NUM_GPIO_PINS - j - 1)) {
 				gpio_write(inputArray[j], HIGH);
-			} else {
-				gpio_write(inputArray[j], LOW);
+				} else {
+					gpio_write(inputArray[j], LOW);
+				}
 			}
+
+			timer_delay_ms(2);
 		}
-		timer_delay_ms(2);
-	}
-	gpio_write(inputArray[3], LOW);
+
+		stepper_off();
 }
 
 void step_stepper_steps(unsigned int direction, unsigned int steps) {

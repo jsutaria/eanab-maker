@@ -16,6 +16,7 @@ void main(void) {
     printf("Hello, world!\n");
 
     stepper_test();
+    valve_test();
   //  wait_for_press();
     // while (1) {
     //   wait_for_press();
@@ -50,10 +51,6 @@ void main(void) {
     // // test_on_off();
     //
     //
-    // printf("testing all 4 valves simultaneously\n");
-    // turn_on_valves(200, 100, 50, 400);
-    // //stepper_init(GPIO_PIN19, GPIO_PIN16, GPIO_PIN20, GPIO_PIN21);
-    // //stepper_test();
 }
 
 void stepper_test() {
