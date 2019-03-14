@@ -23,26 +23,33 @@ void valves_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, uns
     gpio_set_output(pin_4);
 }
 
+void all_valves_on() {
+    for(int valve = 0; valve < 4; valve++) valve_on(valve);
+}
+
+void all_valves_off() {
+    for(int valve = 0; valve < 4; valve++) valve_on(valve);
+}
+
+void valve_on(int valve) {
+    gpio_write(valves[valve], ON);
+}
+
+void valve_off(int valve) {
+    gpio_write(valves[valve], OFF);
+}
+
 void test_on_off() {
-  while (1) {
-
-    for (int i = 0; i < 4; i++) {
-      gpio_write(valves[i], 1);
+    while (1) {
+      all_valves_on();
+      timer_delay(1);
+      all_valves_off();
+      timer_delay(1);
     }
-
-    timer_delay(1);
-
-    for (int i = 0; i < 4; i++) {
-      gpio_write(valves[i], 0);
-    }
-    timer_delay(1);
-  }
 }
 
 void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
-  for (int i = 0; i < 4; i++) {
-    gpio_write(valves[i], 1);
-  }
+  all_valves_on();
 
   // int time_1 = ingredients[0];
   // int time_2 = ingredients[1];
@@ -51,30 +58,15 @@ void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
 
 // time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
-    time_1--;
-    time_2--;
-    time_3--;
-    time_4--;
     printf("Time 1: %d\n", time_1);
     printf("Time 2: %d\n", time_2);
     printf("Time 3: %d\n", time_3);
     printf("Time 4: %d\n", time_4);
 
-    if (time_1 == 1) {
-      gpio_write(valves[0], 0);
-    }
-
-    if (time_2 == 1) {
-      gpio_write(valves[1], 0);
-    }
-
-    if (time_3 == 1) {
-      gpio_write(valves[2], 0);
-    }
-
-    if (time_4 == 1) {
-      gpio_write(valves[3], 0);
-    }
+    if (--time_1 == 1) valve_off(VALVE_1);
+    if (--time_2 == 1) valve_off(VALVE_2);
+    if (--time_3 == 1) valve_off(VALVE_3);
+    if (--time_4 == 1) valve_off(VALVE_4);
 
     timer_delay_ms(TIME_DELAY);
   }
