@@ -42,6 +42,7 @@ void stepStepper(unsigned int direction) {
 		}
 
 		timer_delay_ms(2);
+
 }
 
 void turnStepper(unsigned int direction, unsigned int numTimes) {
