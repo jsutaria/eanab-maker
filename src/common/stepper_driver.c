@@ -36,10 +36,15 @@ void step_stepper(unsigned int direction) {
 		}
 		timer_delay_ms(2);
 	}
+	gpio_write(inputArray[3], LOW);
+}
+
+void step_stepper_steps(unsigned int direction, unsigned int steps) {
+		for(int i = 0; i < steps; i++) step_stepper(direction);
 }
 
 void turn_stepper_angle(unsigned int direction, unsigned int angle) {
-		for(int i = 0; i < NUMSTEPS_180 / 180.0 * angle; i++) step_stepper(direction);
+		step_stepper_steps(direction, (angle * NUMSTEPS_180) / 180);
 }
 
 void turn_stepper_90(unsigned int direction) {

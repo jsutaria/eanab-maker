@@ -2,7 +2,6 @@
 #define STEPPER_DRIVER_H
 
 #define NUMSTEPS_180 256
-#define NUMSTEPS_90 128
 
 #define FORWARDS  1
 #define BACKWARDS 0
@@ -15,6 +14,8 @@
 void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4);
 
 void step_stepper(unsigned int direction);
+
+void step_stepper_steps(unsigned int direction, unsigned int steps);
 
 void turn_stepper_angle(unsigned int direction, unsigned int angle);
 
