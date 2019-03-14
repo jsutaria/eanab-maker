@@ -3,9 +3,12 @@
 
 #include "storage.h"
 
+#define COMMUNICATOR_CLOCK GPIO_PIN23
+#define COMMUNICATOR_DATA GPIO_PIN24
+
 #define COMMUNICATOR_MAX_LEN 1024
 #define COMMUNICATOR_START_BYTE '%'
-#define COMMUNICATOR_END_BYTE '?'
+#define COMMUNICATOR_END_BYTE '$'
 #define COMMUNICATOR_SENTINEL '^'
 
 #define COMMUNICATOR_UART_INTERRUPTS_ENABLES 0x20215044
@@ -24,7 +27,7 @@ typedef enum {
 /**
  * Initializes the communicator. Used for pi<->pi communication.
  */
-void communicator_init(communicator_mode_t mode);
+void communicator_init(unsigned int clock_gpio, unsigned int data_gpio, communicator_mode_t mode);
 
 /**
  * Sends a given (user, ingredients) pairing over the communicator.

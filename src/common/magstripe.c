@@ -1,15 +1,25 @@
 #include "magstripe.h"
-#include "keyboard.h"
+#include "keyboardish.h"
 #include "malloc.h"
 #include "printf.h"
 #include "strings.h"
+#include "timer.h"
 #include "ps2_helpers.h"
 
 void magstripe_init(unsigned int clock_gpio, unsigned int data_gpio)
 {
-    ps2_write(clock_gpio, data_gpio, MAGSTRIPE_RESET_COMMAND);
-    keyboard_init(clock_gpio, data_gpio);
-    keyboard_use_interrupts();
+    printf("[magstripe] Sending magstripe reset...\n");
+    // ps2_write(clock_gpio, data_gpio, 0x02); // 0x02 = reset
+    for (int i = 0; i < 100; i++) ps2_write(clock_gpio, data_gpio, 0x00); // 0x00 data pad for 22 bytes
+    keyboardish_init(clock_gpio, data_gpio);
+
+    printf("[magstripe] Sent reset, waiting for reset...\n");
+    timer_delay_ms(1000);
+
+    printf("[magstripe] Initializing magstripe...\n");
+    // keyboardish_init(clock_gpio, data_gpio);
+
+    printf("[magstripe] Reset, now listening...\n");
 }
 
 static char * magstripe_select_dest_field(magstripe_fields_t field, magstripe_track_t* track)
@@ -58,10 +68,14 @@ magstripe_card_t * magstripe_read_next_card(void)
     #endif
 
     while (1) {
-        char ch = keyboard_read_next();
+        #if MAGSTRIPE_DEBUG
+            printf("0x");
+        #endif
+
+        char ch = keyboardish_read_next();
 
         #if MAGSTRIPE_DEBUG
-            printf("%c", ch);
+            printf("%02x ", ch);
         #endif
 
         // Reading track da6a
@@ -78,7 +92,7 @@ magstripe_card_t * magstripe_read_next_card(void)
                     curr_field_index = 0;
                 } else {
                     // end of track 2 = end of this read since we only support cards with 1-2 tracks
-                    (void)keyboard_read_next(); // consume the newline to confirm ack
+                    (void)keyboardish_read_next(); // consume the newline to confirm ack
                     break;
                 }
 
@@ -109,7 +123,7 @@ magstripe_card_t * magstripe_read_next_card(void)
         // Sentinel: set State = Track 1
         } else if (ch == '%') {
             state |= MAGSTRIPE_STATE_TRACK_1;
-            (void)keyboard_read_next(); // consume format code ("B")
+            (void)keyboardish_read_next(); // consume format code ("B")
             field = MAGSTRIPE_FIELD_PAN;
 
         // Sentinel: set State = Track 2

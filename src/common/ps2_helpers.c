@@ -5,6 +5,20 @@
 
 static unsigned int writing_data_line = 0;
 
+void ps2_wake(unsigned int clock_gpio, unsigned int data_gpio)
+{
+    gpio_set_function(clock_gpio, GPIO_FUNC_OUTPUT);
+    gpio_set_function(data_gpio, GPIO_FUNC_OUTPUT);
+
+    gpio_write(clock_gpio, 1);
+    gpio_write(data_gpio, 1);
+    timer_delay_ms(10);
+
+    gpio_write(clock_gpio, 0);
+    gpio_write(data_gpio, 0);
+    timer_delay_ms(10);
+}
+
 void ps2_write(unsigned int clock_gpio, unsigned int data_gpio, unsigned char data)
 {
     // Mark line as writing so we disregard interrupts
@@ -36,7 +50,7 @@ void ps2_write(unsigned int clock_gpio, unsigned int data_gpio, unsigned char da
       sum += (data >> i) & 1;
     }
 
-    // RRelease data line
+    // Release data line
     gpio_set_function(data_gpio, GPIO_FUNC_INPUT);
     gpio_set_pullup(data_gpio);
 

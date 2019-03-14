@@ -9,18 +9,19 @@
 #include <QueueList.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
+#include "ps2dev.h"
 
-#define ECHO_TEST_TXD  (GPIO_NUM_4)
-#define ECHO_TEST_RXD  (GPIO_NUM_5)
-#define ECHO_TEST_RTS  (UART_PIN_NO_CHANGE)
-#define ECHO_TEST_CTS  (UART_PIN_NO_CHANGE)
+#define PS2_ECHO_CLOCK  (GPIO_NUM_4)
+#define PS2_ECHO_DATA  (GPIO_NUM_5)
 
 // sync with <communicator.h>
 #define COMMUNICATOR_MAX_LEN 1024
 
+PS2dev pi(PS2_ECHO_CLOCK, PS2_ECHO_DATA);
+
 AsyncWebServer server(80);
 QueueList<String> receive_queue;
-QueueList<String> send_queue;
+QueueList<unsigned char> send_queue;
 
 const char* ssid      = "EANABMaker";
 const char* mdns_name = "eanab";
@@ -32,7 +33,7 @@ void setup() {
   // ----------
 
   Serial.begin(115200); // UART baud is 115,200 bps
-  xTaskCreate(uart_echo_task, "uart_echo_task", 1024, NULL, 10, NULL);
+  // xTaskCreate(ps2_echo_task, "ps2_echo_task", 1024, NULL, 10, NULL);
 
   // ------------
   // SPIFFS SETUP
@@ -71,12 +72,17 @@ void setup() {
   /**
    * Handles POSTed ingredient configuration.
    */
-  server.on("/", HTTP_POST, [](AsyncWebServerRequest * request) {
-    request->send(200);
-  });
+  // server.on("/", HTTP_POST, [](AsyncWebServerRequest * request) {
+  //   request->send(200);
+  // });
   server.onRequestBody([](AsyncWebServerRequest * request, uint8_t *data, size_t len, size_t index, size_t total) {
-    String message = (char *)data;
+    String message = "";
+    char *temp = (char *)data;
+    for (int i = 0; i < len; i++) message += temp[i];
+    Serial.print("Received new request: ");
+    Serial.println(message);
     receive_queue.push(message);
+    request->send(200);
   });
 
   /**
@@ -84,7 +90,12 @@ void setup() {
    */
   server.on("/read", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!send_queue.isEmpty()) {
-      String message = send_queue.pop();
+      char *message = (char *)malloc(COMMUNICATOR_MAX_LEN);
+      char *ptr = message;
+      while (!send_queue.isEmpty()) {
+        *ptr++ = (char)send_queue.pop();
+      }
+      ptr = '\0';
       request->send(200, "text/plain", message);
     } else {
       request->send(404, "text/plain", "no pending message in queue");
@@ -100,45 +111,55 @@ void setup() {
 
   delay(100);
 }
+void loop() {
+  Serial.print("A state:");
+  Serial.print(digitalRead(PS2_ECHO_CLOCK));
+  Serial.print(",");
+  Serial.print(digitalRead(PS2_ECHO_DATA));
+  Serial.println();
 
-/**
- * Separate thread for uart transmission.
- */
-static void uart_echo_task(void *pvParameters)
-{
-  // Configure parameters of a UART driver & communication pins, and install the driver.
-  uart_config_t uart_config = {
-    .baud_rate = 115200,
-    .data_bits = UART_DATA_8_BITS,
-    .parity    = UART_PARITY_DISABLE,
-    .stop_bits = UART_STOP_BITS_1,
-    .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
-  };
-  uart_param_config(UART_NUM_1, &uart_config);
-  uart_set_pin(UART_NUM_1, ECHO_TEST_TXD, ECHO_TEST_RXD, ECHO_TEST_RTS, ECHO_TEST_CTS);
-  uart_driver_install(UART_NUM_1, COMMUNICATOR_MAX_LEN * 2, 0, 0, NULL, 0);
+  // Wait for the line to be ready
+  while (pi.write(0x00) != 0) {
+    Serial.print("State:");
+    Serial.print(digitalRead(PS2_ECHO_CLOCK));
+    Serial.print(",");
+    Serial.print(digitalRead(PS2_ECHO_DATA));
+    Serial.println();
+    delay(100);
+  }
 
-  // Temporary buffer for the incoming data
-  char *data = (char *) malloc(COMMUNICATOR_MAX_LEN);
+  Serial.println("Echo: established connection to pi!");
 
   while (1) {
 
-    // If there is anything in the receive queue (from WiFi), send it on UART
-    if (!receive_queue.isEmpty()) {
-      String str = receive_queue.pop();
-      uart_write_bytes(UART_NUM_1, str.c_str(), str.length());
+    // Serial.print("A state:");
+    // Serial.print(digitalRead(PS2_ECHO_CLOCK));
+    // Serial.print(",");
+    // Serial.print(digitalRead(PS2_ECHO_DATA));
+    // Serial.println();
+
+    // Read character from pi if pending
+    unsigned char c;
+    if (digitalRead(PS2_ECHO_CLOCK) == LOW || digitalRead(PS2_ECHO_DATA) == LOW) {
+      pi.read(&c);
+      send_queue.push(c);
+      Serial.println(c);
     }
 
-    // If there is any response waiting, send it back over WiFi
-    int len = uart_read_bytes(UART_NUM_1, (uint8_t *)data, COMMUNICATOR_MAX_LEN, 20 / portTICK_RATE_MS);
-    if (len > 0) {
-      data[len] = '\0';
-      send_queue.push(data);
+    // If there is anything in the receive queue (from WiFi), send it
+    if (!receive_queue.isEmpty()) {
+      String str = receive_queue.pop();
+      const char *raw_str = str.c_str();
+      int len = str.length();
+      for (int i = 0; i < len; i++) {
+        pi.write((unsigned char)raw_str[i]);
+        delay(20);
+      }
+      Serial.print("Wrote to pi: ");
+      Serial.println(str);
     }
 
     // Delay to keep from flooding
     delay(10);
-  }
+  }  
 }
-
-void loop() {}

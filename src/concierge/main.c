@@ -12,7 +12,7 @@ void main(void)
     uart_init();
     magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     storage_init();
-    communicator_init(COMMUNICATOR_MODE_CONCIERGE);
+    communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_CONCIERGE);
     interrupts_global_enable();
 
     printf("Hello from the concierge!\n");
