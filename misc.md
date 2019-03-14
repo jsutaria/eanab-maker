@@ -36,3 +36,26 @@
 | 25        |           |
 | 26        |           |
 | 27        |           |
+
+|      Left      |     Right     |
+| -------------- | ------------- |
+| (3.3V) Power   | (5V) Power    |
+| (2)            | (5V) Power    |
+| (3) Magstripe  | (GND)         |
+| (4) Magstripe  | (14) UART     |
+| (GND)          | (15) UART     |
+| (17)           | (18)          |
+| (27) Magstripe | (GND)         |
+| (22) TAJ       | (23) TAJ      |
+| (3.3V) Power   | (24)          |
+| (10) ADC       | (GND)         |
+| (9) ADC        | (25)          |
+| (11) ADC       | (8) ADC       |
+| (GND)          | (7)           |
+| (0)            | (1)           |
+| (5)            | (GND)         |
+| (6)            | (12) Stepper  |
+| (13)           | (GND)         |
+| (19)           | (16) Stepper  |
+| (26)           | (20) Stepper  |
+| (GND)          | (21) Stepper  |

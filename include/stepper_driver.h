@@ -3,6 +3,9 @@
 
 #define NUMSTEPS_180 256
 
+#define HIGH 1
+#define LOW  1
+
 #define FORWARDS  1
 #define BACKWARDS 0
 

@@ -4,8 +4,6 @@
 
 #define NUM_ITERATIONS 4
 #define NUM_GPIO_PINS 4
-#define HIGH 1
-#define LOW 0
 
 static unsigned int inputArray[NUM_GPIO_PINS];
 
@@ -32,11 +30,8 @@ void step_stepper(unsigned int direction) {
 			else bitPattern = 1 << i;
 
 			for(int j = 0; j < NUM_GPIO_PINS; j++) {
-				if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >> (NUM_GPIO_PINS - j - 1)) {
-				gpio_write(inputArray[j], HIGH);
-				} else {
-					gpio_write(inputArray[j], LOW);
-				}
+				if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >> (NUM_GPIO_PINS - j - 1)) gpio_write(inputArray[j], HIGH);
+				else gpio_write(inputArray[j], LOW);
 			}
 
 			timer_delay_ms(2);
