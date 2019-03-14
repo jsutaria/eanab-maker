@@ -25,7 +25,7 @@
 | 14 TXD    | UART      |
 | 15 RXD    | UART      |
 | 16        | Stepper   |   
-| 17        |           |
+| 17        | Button    |
 | 18 PWM0   |           |
 | 19 MISO   | Valves    |
 | 20 MOSI   | Stepper   |
@@ -44,7 +44,7 @@
 | (3) Magstripe  | (GND)         |
 | (4) Magstripe  | (14) UART     |
 | (GND)          | (15) UART     |
-| (17)           | (18)          |
+| (17) Button    | (18)          |
 | (27) Magstripe | (GND)         |
 | (22) TAJ       | (23) TAJ      |
 | (3.3V) Power   | (24)          |
