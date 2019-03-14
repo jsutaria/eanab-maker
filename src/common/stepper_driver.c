@@ -26,22 +26,23 @@ void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, un
 		gpio_set_output(pin_4);
 }
 
-void stepStepper(unsigned int direction){
-		unsigned int bitPattern;
+void stepStepper(unsigned int direction) {
+		unsigned int bitPattern = 0;
 		for(int i = 0; i < 4; i++) {
 				if(direction == FORWARDS) bitPattern = 1 << (NUM_ITERATIONS - i - 1);
 				else bitPattern = 1 << i;
 		}
 
-		for(int j = 0; j < NUM_GPIO_PINS; j++){
+		for(int j = 0; j < NUM_GPIO_PINS; j++) {
 			if((bitPattern & (1<<(NUM_GPIO_PINS - j - 1))) >>  (NUM_GPIO_PINS - j - 1)){
 				gpio_write(pin_map[j], HIGH);
 			} else {
 				gpio_write(pin_map[j], LOW);
 			}
 		}
+
 		timer_delay_ms(2);
-	
+
 }
 
 void turnStepper(unsigned int direction, unsigned int numTimes) {
