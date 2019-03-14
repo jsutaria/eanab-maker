@@ -28,7 +28,7 @@ unsigned int breathalyzer_read(void) {
     timer_delay_ms(wait);
   }
 
-  unsigned int reading = total_signal / 5;
+  unsigned int reading = total_signal / NUM_AVERAGE;
 
   unsigned int bac_1000 = MAX_ALC * reading / 1024;
   return bac_1000;
