@@ -1,8 +1,5 @@
-#ifndef BREATHALYZER_H
-#define BREATHALYZER_H
-
-#include "gpio.h"
-#include "printf.h"
+#ifndef BUTTON_H
+#define BUTTON_H
 
 void button_init(unsigned int data_pin);
 
