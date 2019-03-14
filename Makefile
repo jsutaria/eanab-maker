@@ -36,6 +36,7 @@ install-t: src/test/$(NAME).bin
 clean:
 	git clean -fX
 	rm -f *.o *.bin *.elf *.list *~
+	rm -f src/common/*.o src/common/*.bin src/common/*.elf src/common/*.list src/common/*~
 
 .PHONY: all clean install-m install-c install-t
 
