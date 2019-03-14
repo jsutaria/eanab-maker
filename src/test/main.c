@@ -8,19 +8,26 @@
 #include "breathalyzer.h"
 #include "button.h"
 
+void initialize() {
+    uart_init();
+    gpio_init();
+    mcp3008_init();
+    button_init(GPIO_PIN17);
+    stepper_init(STEPPER_PIN1, STEPPER_PIN2, STEPPER_PIN3, STEPPER_PIN4);
+    valve_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
+    breathalyzer_init(BREATHALYZER_CHANNEL);
+}
 
 void main(void) {
-    uart_init();
+    initialize();
     printf("Hello, world!\n");
 
-    button_init(GPIO_PIN17);
     wait_for_press();
     // while (1) {
     //   wait_for_press();
     // }
 
-    //HOW TO INITIALIZE VALVE:
-    //valve_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
+    //HOW TO INITIALIZE VALVE: valve_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
 
     // mcp3008_init();
 
@@ -32,7 +39,7 @@ void main(void) {
 
 
     // mcp3008_init();
-    breathalyzer_init(0);
+
 
     while(1) {
       printf("Value: %d\n", breathalyzer_read());
