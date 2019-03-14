@@ -59,7 +59,19 @@ void main(void) {
 void stepper_test() {
     int i = 0;
     while(1) {
-      turn_stepper_angle(FORWARDS, 15 * i++);
+      printf("Turning: %d\n", 15 * i);
+      turn_stepper_angle(FORWARDS, 15 * i);
+      timer_delay(1);
+      turn_stepper_angle(BACKWARDS, 15 * i++);
+      timer_delay(1);
+    }
+}
+
+void valve_test() {
+    while (1) {
+      all_valves_on();
+      timer_delay(1);
+      all_valves_off();
       timer_delay(1);
     }
 }

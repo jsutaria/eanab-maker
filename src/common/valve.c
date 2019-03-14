@@ -39,24 +39,9 @@ void valve_off(int valve) {
     gpio_write(valves[valve], OFF);
 }
 
-void test_on_off() {
-    while (1) {
-      all_valves_on();
-      timer_delay(1);
-      all_valves_off();
-      timer_delay(1);
-    }
-}
-
 void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
   all_valves_on();
 
-  // int time_1 = ingredients[0];
-  // int time_2 = ingredients[1];
-  // int time_3 = ingredients[2];
-  // int time_4 = ingredients[3];
-
-// time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
     printf("Time 1: %d\n", time_1);
     printf("Time 2: %d\n", time_2);
