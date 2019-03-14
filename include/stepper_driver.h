@@ -7,10 +7,10 @@
 #define FORWARDS  1
 #define BACKWARDS 0
 
-#define STEPPER_PIN1 GPIO_PIN12
-#define STEPPER_PIN2 GPIO_PIN16
-#define STEPPER_PIN3 GPIO_PIN20
-#define STEPPER_PIN4 GPIO_PIN21
+#define STEPPER_PIN_1 GPIO_PIN12
+#define STEPPER_PIN_2 GPIO_PIN16
+#define STEPPER_PIN_3 GPIO_PIN20
+#define STEPPER_PIN_4 GPIO_PIN21
 
 void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4);
 

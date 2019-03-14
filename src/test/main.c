@@ -9,9 +9,13 @@
 
 void main(void) {
     uart_init();
-    printf("Hello, worlds!\n");
+    printf("Hello, world!\n");
 
-    stepper_init(STEPPER_PIN1, STEPPER_PIN2, STEPPER_PIN3, STEPPER_PIN4);
+    //HOW TO INITIALIZE VALVE:
+    //valve_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
+
+    //HOW TO INITIALIZE STEPPER:
+    //stepper_init(STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
 
     while(1) turnStepper(FORWARDS, NUMSTEPS_90);
 

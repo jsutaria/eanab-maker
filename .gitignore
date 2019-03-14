@@ -6,4 +6,3 @@
 *.text
 *.d
 *.exe
-src/test/*.*
