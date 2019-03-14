@@ -3,10 +3,13 @@
 #include "malloc.h"
 #include "printf.h"
 #include "strings.h"
+#include "ps2_helpers.h"
 
 void magstripe_init(unsigned int clock_gpio, unsigned int data_gpio)
 {
+    ps2_write(clock_gpio, data_gpio, MAGSTRIPE_RESET_COMMAND);
     keyboard_init(clock_gpio, data_gpio);
+    keyboard_use_interrupts();
 }
 
 static char * magstripe_select_dest_field(magstripe_fields_t field, magstripe_track_t* track)
