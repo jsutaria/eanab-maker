@@ -14,7 +14,7 @@ void main(void)
     uart_init();
     magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     storage_init();
-    communicator_init(COMMUNICATOR_MODE_MAKER);
+    communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_MAKER);
     interrupts_global_enable();
 
     printf("Hello from the maker!\n");

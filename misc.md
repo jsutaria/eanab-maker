@@ -30,9 +30,9 @@
 | 19 MISO   | Valves    |
 | 20 MOSI   | Stepper   |
 | 21 SCLK   | Stepper   |
-| 22        | TAJ       |
+| 22        |           |
 | 23        | TAJ       |
-| 24        |           |
+| 24        | TAJ       |
 | 25        |           |
 | 26        | Valves    |
 | 27        |           |
@@ -46,8 +46,8 @@
 | (GND)          | (15) UART     |
 | (17) Button    | (18)          |
 | (27) Magstripe | (GND)         |
-| (22) TAJ       | (23) TAJ      |
-| (3.3V) Power   | (24)          |
+| (22)           | (23) TAJ      |
+| (3.3V) Power   | (24) TAJ      |
 | (10) ADC       | (GND)         |
 | (9) ADC        | (25)          |
 | (11) ADC       | (8) ADC       |

@@ -9,20 +9,21 @@
 #include <WiFi.h>
 #include <WiFiMulti.h>
 #include <HTTPClient.h>
+#include "ps2dev.h"
 
-#define ECHO_TEST_TXD  (GPIO_NUM_4)
-#define ECHO_TEST_RXD  (GPIO_NUM_5)
-#define ECHO_TEST_RTS  (UART_PIN_NO_CHANGE)
-#define ECHO_TEST_CTS  (UART_PIN_NO_CHANGE)
+#define PS2_ECHO_CLOCK  (GPIO_NUM_4)
+#define PS2_ECHO_DATA  (GPIO_NUM_5)
 
 #define POLL_DELAY_MS 1000;
 
 // sync with <communicator.h>
 #define COMMUNICATOR_MAX_LEN 1024
 
+PS2dev pi(PS2_ECHO_CLOCK, PS2_ECHO_DATA);
+
 WiFiMulti wifiMulti;
 QueueList<String> receive_queue;
-QueueList<String> send_queue;
+QueueList<char> send_queue;
 
 const char* ssid         = "EANABMaker";
 const char* fetch_target = "http://eanab.local/read";
@@ -34,7 +35,7 @@ void setup() {
   // ----------
 
   Serial.begin(115200); // UART baud is 115,200 bps
-  xTaskCreate(uart_echo_task, "uart_echo_task", 1024, NULL, 10, NULL);
+  xTaskCreate(ps2_echo_task, "ps2_echo_task", 1024, NULL, 10, NULL);
 
   // --------
   // WIFI SETUP
@@ -76,36 +77,28 @@ void loop() {
 /**
    Separate thread for uart transmission.
 */
-static void uart_echo_task(void *pvParameters)
+static void ps2_echo_task(void *pvParameters)
 {
-  // Configure parameters of a UART driver & communication pins, and install the driver.
-  uart_config_t uart_config = {
-    .baud_rate = 115200,
-    .data_bits = UART_DATA_8_BITS,
-    .parity    = UART_PARITY_DISABLE,
-    .stop_bits = UART_STOP_BITS_1,
-    .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
-  };
-  uart_param_config(UART_NUM_1, &uart_config);
-  uart_set_pin(UART_NUM_1, ECHO_TEST_TXD, ECHO_TEST_RXD, ECHO_TEST_RTS, ECHO_TEST_CTS);
-  uart_driver_install(UART_NUM_1, COMMUNICATOR_MAX_LEN * 2, 0, 0, NULL, 0);
-
-  // Temporary buffer for the incoming data
-  char *data = (char *) malloc(COMMUNICATOR_MAX_LEN);
+  // Wait for the line to be ready
+  while (pi.write(0x00) != 0) {
+    delay(10);
+  }
 
   while (1) {
 
-    // If there is anything in the receive queue (from WiFi), send it on UART
-    if (!receive_queue.isEmpty()) {
-      String str = receive_queue.pop();
-      uart_write_bytes(UART_NUM_1, str.c_str(), str.length());
+    // Read character from pi if pending
+    unsigned char c;
+    if (digitalRead(PS2_ECHO_CLOCK) == LOW || digitalRead(PS2_ECHO_DATA) == LOW) {
+      while (pi.read(&c));
+      send_queue.push(c);
     }
 
-    // If there is any response waiting, send it back over WiFi
-    int len = uart_read_bytes(UART_NUM_1, (uint8_t *)data, COMMUNICATOR_MAX_LEN, 20 / portTICK_RATE_MS);
-    if (len > 0) {
-      data[len] = '\0';
-      send_queue.push(data);
+    // If there is anything in the receive queue (from WiFi), send it
+    if (!receive_queue.isEmpty()) {
+      String str = receive_queue.pop();
+      char *raw_str = str.c_str();
+      int len = str.length();
+      for (int i = 0; i < len; i++) pi.write(raw_str[i]);
     }
 
     // Delay to keep from flooding

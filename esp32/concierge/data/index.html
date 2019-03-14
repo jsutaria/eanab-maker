@@ -271,7 +271,16 @@
 
       function serializeIngredientRequest() {
         var percentages = newPie.getAllSliceSizePercentages();
-        return `${START_SENTINEL}${MODE}${percentages.map(p => String.fromCharCode(Math.max(Math.round(p * 255), 1))).join('')}${END_SENTINEL}`;
+        return `${START_SENTINEL}${MODE}${percentages.map(p => {
+          let code = String.fromCharCode(Math.max(Math.round((p / 100) * 255), 1));
+
+          // Round up for restricted characters lol
+          if (code == START_SENTINEL.charCodeAt() || code == END_SENTINEL.charCodeAt()) {
+            code++;
+          }
+
+          return code;
+        }).join('')}${END_SENTINEL}`;
       }
 
       function actionSubmit() {
