@@ -48,10 +48,10 @@ void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
     printf("Time 3: %d\n", time_3);
     printf("Time 4: %d\n", time_4);
 
-    if (--time_1 == 1) valve_off(VALVE_1);
-    if (--time_2 == 1) valve_off(VALVE_2);
-    if (--time_3 == 1) valve_off(VALVE_3);
-    if (--time_4 == 1) valve_off(VALVE_4);
+    if (--time_1 <= 1) valve_off(VALVE_1);
+    if (--time_2 <= 1) valve_off(VALVE_2);
+    if (--time_3 <= 1) valve_off(VALVE_3);
+    if (--time_4 <= 1) valve_off(VALVE_4);
 
     timer_delay_ms(TIME_DELAY);
   }
