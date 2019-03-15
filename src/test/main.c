@@ -66,10 +66,6 @@ void servo_test() {
       servo_set_angle(i);
       timer_delay(1);
       i += 15;
-      // servo_set_angle(i % 90);
-      // printf("%d\n", i);
-      // i++;
-      // if(i%90 == 0) timer_delay(3);
     }
 }
 
