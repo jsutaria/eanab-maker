@@ -9,11 +9,6 @@
 #define READ_TIME 5
 static unsigned int adc_channel;
 
-// int readVals(void) {
-//     int total = 0;
-//     for(int i = 0; i < 100; i++) total+= mcp3008_read(adc_channel);
-//     return total/100;
-// }
 
 void breathalyzer_init(unsigned int adc_channel_num)
 {
@@ -29,12 +24,14 @@ unsigned int breathalyzer_read(void) {
     timer_delay_ms(wait);
   }
 
-  unsigned int reading = total_signal / NUM_AVERAGE;
+  return (total_signal / NUM_AVERAGE);
+}
 
-  unsigned int bac_1000 = MAX_ALC * reading / 1024;
-  return bac_1000;
+unsigned int get_bac_1000(void) {
+  unsigned int reading = breathalyzer_read();
+  return (MAX_ALC * reading / 1024);
 }
 
 unsigned int detect_drunk(void) {
-  return (breathalyzer_read() > DRUNK_THRESHOLD);
+  return (get_bac_1000() > DRUNK_THRESHOLD);
 }

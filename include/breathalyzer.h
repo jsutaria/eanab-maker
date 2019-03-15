@@ -7,6 +7,8 @@ void breathalyzer_init(unsigned int adc_channel_num);
 
 unsigned int breathalyzer_read(void);
 
+unsigned int get_bac_1000(void);
+
 unsigned int detect_drunk(void);
 
 #endif
