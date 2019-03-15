@@ -17,10 +17,9 @@ void valves_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, uns
     valves[2] = pin_3;
     valves[3] = pin_4;
 
-    gpio_set_output(valves[0]);
-    gpio_set_output(valves[1]);
-    gpio_set_output(valves[2]);
-    gpio_set_output(valves[3]);
+    for (int i = 0; i < 4; i++) {
+			gpio_set_output(valves[i]);
+		}
 }
 
 void all_valves_on() {

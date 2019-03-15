@@ -13,10 +13,9 @@ void stepper_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, un
 		inputArray[2] = pin_3;
 		inputArray[3] = pin_4;
 
-		gpio_set_output(pin_1);
-		gpio_set_output(pin_2);
-		gpio_set_output(pin_3);
-		gpio_set_output(pin_4);
+		for (int i = 0; i < NUM_GPIO_PINS; i++) {
+			gpio_set_output(inputArray[i]);
+		}
 }
 
 void stepper_off() {
