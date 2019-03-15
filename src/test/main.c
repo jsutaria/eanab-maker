@@ -61,11 +61,19 @@ void button_test() {
 void servo_test() {
     printf("Servo test\n");
     int i = 0;
+    // while(1) {
+    //   i = i % 180;
+    //   servo_set_angle(i);
+    //   timer_delay(1);
+    //   i += 15;
+    // }
     while(1) {
-      i = i % 180;
-      servo_set_angle(i);
-      timer_delay(1);
-      i += 15;
+      servo_set_0();
+      timer_delay_ms(500);
+      servo_set_90();
+      timer_delay_ms(500);
+      servo_set_180();
+      timer_delay_ms(500);
     }
 }
 
