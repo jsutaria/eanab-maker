@@ -60,13 +60,12 @@ void button_test() {
 
 void servo_test() {
     printf("Servo test\n");
+    int i = 0;
     while(1) {
-      servo_set_angle(0);
+      i = i % 180;
+      servo_set_angle(i);
       timer_delay(1);
-      servo_set_angle(89);
-      timer_delay(1);
-      servo_set_angle(179);
-      timer_delay(1);
+      i += 15;
       // servo_set_angle(i % 90);
       // printf("%d\n", i);
       // i++;

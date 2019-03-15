@@ -10,10 +10,10 @@ void servo_init(unsigned int servo_pin) {
     servo_set_0();
 }
 
-//angle should range from 1-120
+//angle should range from 1-180
 void servo_set_angle(unsigned int angle) {
   angle = angle % 180 + 1;
-  unsigned int time_off = angle * 2500 / 230;
+  unsigned int time_off = angle * 2500 / 232;
 
   for(int i = 0; i < 100; i++) {
     gpio_write(SERVO_PIN, 1);
