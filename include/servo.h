@@ -9,6 +9,6 @@ void servo_set_angle(unsigned int angle);
 
 void servo_set_0();
 
-void servo_set_180();
+void servo_set_90();
 
 #endif
