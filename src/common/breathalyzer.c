@@ -3,10 +3,10 @@
 #include "mcp3008.h"
 #include "timer.h"
 
-#define MAX_ALC 400
 #define DRUNK_THRESHOLD 80
 #define NUM_AVERAGE 5
 #define READ_TIME 5
+static unsigned int max_alc = 400;
 static unsigned int adc_channel;
 
 
@@ -27,9 +27,13 @@ unsigned int breathalyzer_read(void) {
   return (total_signal / NUM_AVERAGE);
 }
 
+void breathalyzer_calibrate(unsigned int max_bac_reading) {
+  max_alc = max_bac_reading;
+}
+
 unsigned int get_bac_1000(void) {
   unsigned int reading = breathalyzer_read();
-  return (MAX_ALC * reading / 1024);
+  return (max_alc * reading / 1024);
 }
 
 unsigned int detect_drunk(void) {
