@@ -9,7 +9,7 @@ void servo_init(unsigned int servo_pin) {
 //angle should range from 1-180
 void servo_set_angle(unsigned int angle) {
   angle = angle % 180 + 1;
-  pwm_set_pulse(angle * SERVO_WIDTH / 232);
+  pwm_set_pulse(angle * SERVO_WIDTH / ANGLE_CONST);
 
   pwm_float(ATTEMPTS);
 }

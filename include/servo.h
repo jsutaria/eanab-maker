@@ -10,6 +10,7 @@
 
 void servo_init(unsigned int servo_pin);
 
+#define ANGLE_CONST 232
 void servo_set_angle(unsigned int angle);
 
 void servo_set_0();
