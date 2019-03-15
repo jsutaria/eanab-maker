@@ -28,7 +28,7 @@ void valve_off(int valve);
 void all_valves_on(void);
 void all_valves_off(void);
 
-void turn_on_valves(int time_1, int time_2, int time_3, int time_4);
+void turn_on_valves(storage_ingredients_t *quantities);
 
 void test_on_off(void);
 

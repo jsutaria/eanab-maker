@@ -38,8 +38,12 @@ void valve_off(int valve) {
     gpio_write(valves[valve], OFF);
 }
 
-void turn_on_valves(int time_1, int time_2, int time_3, int time_4) {
+void turn_on_valves(storage_ingredients_t *quantities) {
   all_valves_on();
+  unsigned int time_1 = quantities[0];
+  unsigned int time_2 = quantities[1];
+  unsigned int time_3 = quantities[2];
+  unsigned int time_4 = quantities[3];
 
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
     printf("Time 1: %d\n", time_1);
