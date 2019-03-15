@@ -37,17 +37,17 @@ void servo_init(unsigned int servo_pin) {
   //   gpio_write(GPIO_PIN18, 0);
   //   timer_delay_ms((i % 50));
   // }
-
+  servo_set_0();
 }
 
 void servo_set_angle(unsigned int angle) {
 
 }
 
-void servo_set_0(unsigned int angle) {
+void servo_set_0() {
     servo_set_angle(0);
 }
 
-void servo_set_180(unsigned int angle) {
+void servo_set_180() {
     servo_set_angle(180);
 }
