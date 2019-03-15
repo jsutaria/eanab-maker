@@ -1,6 +1,8 @@
 #ifndef VALVE_H
 #define VALVE_H
 
+#include "storage.h"
+
 #define ON  1
 #define OFF 0
 
