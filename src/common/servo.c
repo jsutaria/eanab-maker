@@ -12,20 +12,25 @@ void servo_init(unsigned int servo_pin) {
 
 //angle should range from 1-120
 void servo_set_angle(unsigned int angle) {
-  angle = angle % 120 + 1;
-  unsigned int time_off = angle * 2000 / 180;
-  for(int i = 0; i < 200; i++) {
+  angle = angle % 180 + 1;
+  unsigned int time_off = angle * 2500 / 230;
+
+  for(int i = 0; i < 100; i++) {
     gpio_write(SERVO_PIN, 1);
-    timer_delay_us(2000 - time_off);
+    timer_delay_us(2500 - time_off);
     gpio_write(SERVO_PIN, 0);
     timer_delay_us(time_off);
   }
 }
 
 void servo_set_0() {
-    servo_set_angle(1);
+    servo_set_angle(0);
 }
 
 void servo_set_90() {
     servo_set_angle(89);
+}
+
+void servo_set_180() {
+    servo_set_angle(179);
 }
