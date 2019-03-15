@@ -65,7 +65,7 @@ void servo_test() {
 void initialize(void) {
    uart_init();
    gpio_init();
-   servo_init();
+   servo_init(SERVO_PIN);
    stepper_init(STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
    valves_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
    button_init(GPIO_PIN17);
