@@ -3,6 +3,7 @@
 
 #include "gpio.h"
 #include "ps2.h"
+#include "keyboard.h"
 
 /*
  * Module to read keys typed on a PS/2 keyboardish.
@@ -12,7 +13,7 @@
  * Author: Philip Levis <pal@cs.stanford.edu>
  * Author: Julie Zelenski <zelenski@cs.stanford.edu>
  * Author: TAJ team
- * 
+ *
  * Last updated:   February 2019
  */
 
@@ -99,7 +100,7 @@ unsigned char keyboardish_read_scancode(void);
 /*
  * `keyboardish_use_interrupts`
  *
- * Change keyboardish from default polling behavior to instead configure interrupts 
+ * Change keyboardish from default polling behavior to instead configure interrupts
  * for gpio events. After setting keyboardish to use interrupts, client must
  * also globally enable interrupts at system level.
  */

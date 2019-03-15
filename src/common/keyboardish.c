@@ -1,7 +1,7 @@
+#include "keyboardish.h"
 #include "gpio.h"
 #include "gpioextra.h"
 #include "keyboard.h"
-#include "keyboardish.h"
 #include "timer.h"
 #include "ps2.h"
 #include "interrupts.h"
@@ -19,7 +19,7 @@ static unsigned int current_data = 0;
 static bool current_parity = 1;
 static unsigned int last_falling_edge = 0;
 
-static bool on_clock_falling_edge(unsigned int pc) 
+static bool on_clock_falling_edge(unsigned int pc)
 {
     if (gpio_check_and_clear_event(CLK)) {
         // If more than 3ms have elapsed between falling clock edges,
@@ -60,13 +60,12 @@ static bool on_clock_falling_edge(unsigned int pc)
     return false;
 }
 
-
-void keyboardish_init(unsigned int clock_gpio, unsigned int data_gpio) 
+void keyboardish_init(unsigned int clock_gpio, unsigned int data_gpio)
 {
     CLK = clock_gpio;
     gpio_set_input(CLK);
-    gpio_set_pullup(CLK); 
- 
+    gpio_set_pullup(CLK);
+
     DATA = data_gpio;
     gpio_set_input(DATA);
     gpio_set_pullup(DATA);
@@ -78,7 +77,7 @@ void keyboardish_init(unsigned int clock_gpio, unsigned int data_gpio)
     interrupts_enable_source(INTERRUPTS_GPIO3);
 }
 
-unsigned char keyboardish_read_scancode(void) 
+unsigned char keyboardish_read_scancode(void)
 {
     int code = 0;
     while (!rb_dequeue(keyboardish_pending_scancodes, &code)) { /* spin */ }
@@ -154,7 +153,7 @@ void update_global_modifier_state(key_action_t action, ps2_key_t key) {
     }
 }
 
-key_event_t keyboardish_read_event(void) 
+key_event_t keyboardish_read_event(void)
 {
     key_action_t action = keyboardish_read_sequence();
     ps2_key_t key = ps2_keys[action.keycode];
@@ -177,7 +176,7 @@ bool keyboardish_get_modifier( keyboard_modifiers_t mod) {
     return modifier_state & mod;
 }
 
-unsigned char keyboardish_read_next(void) 
+unsigned char keyboardish_read_next(void)
 {
     key_event_t event = keyboardish_read_event();
 
