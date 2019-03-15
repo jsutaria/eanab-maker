@@ -69,6 +69,14 @@ void servo_test() {
     }
 }
 
+void breathalyzer_test() {
+  while (1) {
+    printf("Breathe into the breathalyzer for the next 5 seconds.\n");
+    unsigned int reading = breathalyzer_read();
+    printf("Your reading scaled from 0 to 1023 is %d.\n", reading); 
+  }
+}
+
 void initialize(void) {
    uart_init();
    gpio_init();
