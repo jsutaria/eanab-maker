@@ -16,11 +16,15 @@ void breathalyzer_init(unsigned int adc_channel_num)
     adc_channel = adc_channel_num;
 }
 
+unsigned int breathalyzer_single_read(void) {
+  return mcp3008_read(adc_channel);
+}
+
 unsigned int breathalyzer_read(void) {
   unsigned int total_signal = 0;
   unsigned int wait = READ_TIME * 1000 / NUM_AVERAGE;
   for (int i = 0; i < NUM_AVERAGE; i++) {
-    total_signal += mcp3008_read(adc_channel);
+    total_signal += breathalyzer_single_read();
     timer_delay_ms(wait);
   }
 
