@@ -1,5 +1,5 @@
-#include "gpio.h"
 #include "breathalyzer.h"
+#include "gpio.h"
 #include "mcp3008.h"
 #include "timer.h"
 

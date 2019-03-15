@@ -1,6 +1,6 @@
+#include "stepper_driver.h"
 #include "gpio.h"
 #include "timer.h"
-#include "stepper_driver.h"
 
 #define NUM_ITERATIONS 4
 #define NUM_GPIO_PINS 4

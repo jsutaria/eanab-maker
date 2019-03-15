@@ -1,5 +1,5 @@
-#include "spi.h"
 #include "mcp3008.h"
+#include "spi.h"
 
 void mcp3008_init(void)
 {

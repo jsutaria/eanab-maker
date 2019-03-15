@@ -2,6 +2,7 @@
 #include "uart.h"
 #include "gpio.h"
 #include "stepper_driver.h"
+#include "servo.h"
 #include "timer.h"
 #include "valve.h"
 #include "mcp3008.h"
@@ -12,14 +13,16 @@ void initialize(void);
 void stepper_test(void);
 void valve_test(void);
 void button_test(void);
+void servo_test(void);
 
 void main(void) {
     initialize();
     printf("Hello, world!\n");
 
-    stepper_test();
-    valve_test();
-    button_test();
+    // stepper_test();
+    // valve_test();
+    // button_test();
+    servo_test();
 }
 
 void stepper_test() {
@@ -48,12 +51,21 @@ void valve_test() {
 }
 
 void button_test() {
-    printf("Button Test Started");
+    while(1) {
+      printf("Button Test Started\n");
+      wait_for_press();
+      printf("Button Pressed\n");
+    }
+}
+
+void servo_test() {
+    printf("Servo test\n");
 }
 
 void initialize(void) {
    uart_init();
    gpio_init();
+   servo_init();
    stepper_init(STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
    valves_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
    button_init(GPIO_PIN17);
