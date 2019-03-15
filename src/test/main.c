@@ -62,7 +62,7 @@ void button_test() {
 
 void servo_test() {
     printf("Servo test\n");
-    int i = 0;
+    // int i = 0;
     // while(1) {
     //   i = i % 180;
     //   servo_set_angle(i);
