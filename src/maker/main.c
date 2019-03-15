@@ -36,14 +36,14 @@ void main(void)
             // fixme: flash a red led? some way to indicate error state
             // printf("Oh no, we couldn't find a saved drink for %s. :(\n", user);
             // continue;
-            char *temp = malloc(4);
+            unsigned char *temp = malloc(4);
             unsigned int total = 0;
             for (int i = 0; i < 4; i++) {
-              temp[i] = rand();
+              temp[i] = rand() % 255;
               total += temp[i];
             }
             for (int i = 0; i < 4; i++) {
-              temp[i] = temp[i] / total * 100;
+              temp[i] = temp[i] / total * 255;
             }
 
             ingredients = (storage_ingredients_t *)temp;
