@@ -30,7 +30,7 @@ void main(void)
         char *user = card->track_2->pan;
 
         printf("Looks like %s wants to get a drink!\n", user);
-        storage_ingredents_t *ingredients;
+        storage_ingredients_t *ingredients;
 
         if (!storage_has_key(user)) {
             // fixme: flash a red led? some way to indicate error state
@@ -46,7 +46,7 @@ void main(void)
               temp[i] = temp[i] / total * 100;
             }
 
-            ingredinets = (storage_ingredients_t *)temp;
+            ingredients = (storage_ingredients_t *)temp;
         } else {
           ingredients = (storage_ingredients_t *)storage_get_key(user);
 
