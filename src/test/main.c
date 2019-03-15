@@ -81,7 +81,7 @@ void breathalyzer_test() {
 
 void mcp3008_test() {
   while(1) {
-    printf("Reading: %d\n", mcp3008_read(0);
+    printf("Reading: %d\n", mcp3008_read(0));
     timer_delay_ms(250);
   }
 }
