@@ -14,6 +14,8 @@ void stepper_test(void);
 void valve_test(void);
 void button_test(void);
 void servo_test(void);
+void breathalyzer_test(void);
+void mcp3008_test(void);
 
 void main(void) {
     initialize();
@@ -73,7 +75,14 @@ void breathalyzer_test() {
   while (1) {
     printf("Breathe into the breathalyzer for the next 5 seconds.\n");
     unsigned int reading = breathalyzer_read();
-    printf("Your reading scaled from 0 to 1023 is %d.\n", reading); 
+    printf("Your reading scaled from 0 to 1023 is %d.\n", reading);
+  }
+}
+
+void mcp3008_test() {
+  while(1) {
+    printf("Reading: %d\n", mcp3008_read(0);
+    timer_delay_ms(250);
   }
 }
 
