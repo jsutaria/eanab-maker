@@ -1,5 +1,6 @@
 #include "gpio.h"
 #include "gpioextra.h"
+#include "keyboard.h"
 #include "keyboardish.h"
 #include "timer.h"
 #include "ps2.h"
@@ -9,7 +10,7 @@
 #include <stdbool.h>
 
 static unsigned int CLK, DATA;
-static keyboardish_modifiers_t modifier_state = 0;
+static  keyboard_modifiers_t modifier_state = 0;
 static rb_t *keyboardish_pending_scancodes;
 
 // Internal state used by `on_clock_falling_edge` to build up scancodes.
@@ -172,7 +173,7 @@ static bool is_valid_next_event(key_event_t event) {
 /**
  * Returns the value of a modifier.
  */
-bool keyboardish_get_modifier(keyboardish_modifiers_t mod) {
+bool keyboardish_get_modifier( keyboard_modifiers_t mod) {
     return modifier_state & mod;
 }
 
