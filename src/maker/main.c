@@ -7,8 +7,9 @@
 #include "malloc.h"
 #include "storage.h"
 #include "communicator.h"
+#include "rand.h"
 
-void main(void) 
+void main(void)
 {
     timer_init();
     uart_init();
@@ -29,16 +30,30 @@ void main(void)
         char *user = card->track_2->pan;
 
         printf("Looks like %s wants to get a drink!\n", user);
+        storage_ingredents_t *ingredients;
 
         if (!storage_has_key(user)) {
             // fixme: flash a red led? some way to indicate error state
-            printf("Oh no, we couldn't find a saved drink for %s. :(\n", user);
-            continue;
+            // printf("Oh no, we couldn't find a saved drink for %s. :(\n", user);
+            // continue;
+            char *temp = malloc(4);
+            unsigned int total = 0;
+            for (int i = 0; i < 4; i++) {
+              temp[i] = rand();
+              total += temp[i];
+            }
+            for (int i = 0; i < 4; i++) {
+              temp[i] = temp[i] / total * 100;
+            }
+
+            ingredinets = (storage_ingredients_t *)temp;
+        } else {
+          ingredients = (storage_ingredients_t *)storage_get_key(user);
+
         }
 
-        storage_ingredients_t *ingredients = (storage_ingredients_t *)storage_get_key(user);
         printf("Nice, we're gonna make %d/%d/%d/%d!\n", ingredients[0], ingredients[1], ingredients[2], ingredients[3]);
-        
+
         // fixme
         // - check breathalyzer
         // - make drink
