@@ -6,15 +6,19 @@
 #include "communicator.h"
 #include "storage.h"
 
-void main(void) 
-{
-    timer_init();
-    uart_init();
-    magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
-    storage_init();
-    communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_CONCIERGE);
-    interrupts_global_enable();
 
+void initialize(void) {
+  timer_init();
+  uart_init();
+  magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
+  storage_init();
+  communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_CONCIERGE);
+  interrupts_global_enable();
+}
+
+void main(void)
+{
+    initialize();
     printf("Hello from the concierge!\n");
 
     while (1) {
