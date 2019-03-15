@@ -52,8 +52,34 @@ void main(void)
 
         printf("Nice, we're gonna make %d/%d/%d/%d!\n", ingredients[0], ingredients[1], ingredients[2], ingredients[3]);
 
-        // fixme
-        // - check breathalyzer
-        // - make drink
+        timer_delay(1);
+        printf("Breathe into the breathalyzer for the next 7 seconds.\n");
+        timer_delay_ms(500);
+        
+        if (detect_drunk()) {
+          printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
+        } else {
+          printf("Sweet, you're good to go!\n");
+
+          // Servo
+          timer_delay(1);
+          printf("Dispensing the cup right now!\n");
+          servo_set_90();
+          timer_delay_ms(750);
+          servo_set_0();
+
+          // Stepper
+          timer_delay(1);
+          printf("Moving the drink over to the loading station!\n");
+          turn_stepper_rotations(FORWARDS, 10);
+          printf("Great! The drink's in the right place!\n");
+
+          // Valves
+          timer_delay(1);
+          printf("Dispensing now!\n");
+          turn_on_valves(ingredients);
+          printf("Your drink is ready to go! Enjoy!\n");
+
+        }
     }
 }
