@@ -20,6 +20,7 @@ void initialize(void) {
 
 void main(void)
 {
+    initialize();
     printf("Hello from the maker!\n");
 
     while (1) {
