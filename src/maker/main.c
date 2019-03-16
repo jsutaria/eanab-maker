@@ -9,30 +9,17 @@
 #include "communicator.h"
 #include "rand.h"
 
-static storage_ingredients_t * generate_random_mix(void)
-{
-    storage_ingredients_t *ingredients = (storage_ingredients_t *)malloc(4);
-    unsigned int total = 0;
-    for (int i = 0; i < 4; i++) {
-      ingredients[i] = rand() % 255;
-      total += ingredients[i];
-    }
-    for (int i = 0; i < 4; i++) {
-      ingredients[i] = ingredients[i] / total * 255;
-    }
-
-    return ingredients;
+void initialize(void) {
+  timer_init();
+  uart_init();
+  magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
+  storage_init();
+  communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_MAKER);
+  interrupts_global_enable();
 }
 
 void main(void)
 {
-    timer_init();
-    uart_init();
-    magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
-    storage_init();
-    communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_MAKER);
-    interrupts_global_enable();
-
     printf("Hello from the maker!\n");
 
     while (1) {
@@ -55,7 +42,7 @@ void main(void)
         timer_delay(1);
         printf("Breathe into the breathalyzer for the next 7 seconds.\n");
         timer_delay_ms(500);
-        
+
         if (detect_drunk()) {
           printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
         } else {
