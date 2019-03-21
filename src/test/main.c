@@ -7,6 +7,7 @@
 #include "valve.h"
 #include "mcp3008.h"
 #include "breathalyzer.h"
+#include "photoresistor.h"
 #include "button.h"
 
 void initialize(void);
@@ -21,10 +22,13 @@ void main(void) {
     initialize();
     printf("Hello, world!\n");
 
+    step_until_laser();
+    step_backwards();
     // stepper_test();
-    valve_test();
+    // valve_test();
     // button_test();
     //servo_test();
+    mcp3008_test();
 }
 
 void stepper_test() {
@@ -43,10 +47,10 @@ void stepper_test() {
 void valve_test() {
     printf("Valves ---");
     while (1) {
-      printf("\b\b\bOn");
+      printf("\b\b\bOn ");
       all_valves_on();
       timer_delay(1);
-      printf("\b\bOff");
+      printf("\b\b\bOff");
       all_valves_off();
       timer_delay(1);
     }
@@ -82,7 +86,7 @@ void breathalyzer_test() {
 
 void mcp3008_test() {
   while(1) {
-    printf("Reading: %d\n", mcp3008_read(0));
+    printf("Reading: %04d\n", mcp3008_read(0));
     timer_delay_ms(250);
   }
 }
@@ -95,4 +99,5 @@ void initialize(void) {
    valves_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
    button_init(GPIO_PIN17);
    breathalyzer_init(BREATHALYZER_CHANNEL);
+   photoresistor_init(PHOTORESISTOR_CHANNEL);
 }

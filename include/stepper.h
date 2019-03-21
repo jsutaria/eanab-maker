@@ -30,4 +30,8 @@ void stepper_turn_360(unsigned int direction);
 
 void stepper_turn_rotations(unsigned int direction, unsigned int rotations);
 
+void step_until_laser();
+
+void step_backwards();
+
 #endif
