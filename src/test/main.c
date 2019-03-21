@@ -12,20 +12,24 @@
 
 void initialize(void);
 void stepper_test(void);
+void stepper_laser_test(void);
 void valve_test(void);
 void button_test(void);
 void servo_test(void);
 void breathalyzer_test(void);
 void mcp3008_test(void);
 
+#define LED1 GPIO_PIN16
+#define LED2 GPIO_PIN12
+#define LED3 GPIO_PIN1
+
 void main(void) {
     initialize();
     printf("Hello, world!\n");
 
-    step_until_laser();
-    step_backwards();
     // stepper_test();
-    // valve_test();
+    stepper_laser_test();
+    valve_test();
     // button_test();
     //servo_test();
     mcp3008_test();
@@ -36,12 +40,17 @@ void stepper_test() {
     printf("Turning: ");
     while(1) {
       printf("%04d degrees", 90 * i);
-      stepper_turn_angle(FORWARDS, 90 * i);
+      stepper_turn_angle(1, FORWARDS, 90 * i);
       timer_delay(1);
-      stepper_turn_angle(BACKWARDS, 90 * i++);
+      stepper_turn_angle(1, BACKWARDS, 90 * i++);
       timer_delay(1);
       printf("\b\b\b\b\b\b\b\b\b\b\b\b");
     }
+}
+
+void stepper_laser_test() {
+  step_until_laser();
+  step_backwards();
 }
 
 void valve_test() {
@@ -86,7 +95,7 @@ void breathalyzer_test() {
 
 void mcp3008_test() {
   while(1) {
-    printf("Reading: %04d\n", mcp3008_read(0));
+    printf("Reading: %04d | %04d\n", mcp3008_read(0), mcp3008_read(1));
     timer_delay_ms(250);
   }
 }

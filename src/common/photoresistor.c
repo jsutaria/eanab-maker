@@ -1,7 +1,7 @@
 #include "photoresistor.h"
 #include "mcp3008.h"
 
-#define READINGS 10
+#define READINGS 4
 
 static unsigned int channel;
 

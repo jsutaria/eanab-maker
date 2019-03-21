@@ -21,11 +21,11 @@
 |  9 MISO   | ADC       |
 | 10 MOSI   | ADC       |
 | 11 SCLK   | ADC       |
-| 12 PWM0   | Stepper   |
+| 12 PWM0   |           |
 | 13 PWM1   | Valves    |
 | 14 TXD    | UART      |
 | 15 RXD    | UART      |
-| 16        | Stepper   |   
+| 16        |           |   
 | 17        | Button    |
 | 18 PWM0   |           |
 | 19 MISO   | Valves    |
@@ -55,8 +55,8 @@
 | (GND)          | (7)           |
 | (0)            | (1)           |
 | (5)            | (GND)         |
-| (6) Valves     | (12) Stepper  |
+| (6) Valves     | (12)          |
 | (13) Valves    | (GND)         |
-| (19) Valves    | (16) Stepper  |
+| (19) Valves    | (16)          |
 | (26) Valves    | (20) Stepper  |
 | (GND)          | (21) Stepper  |
