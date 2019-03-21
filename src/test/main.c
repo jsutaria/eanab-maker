@@ -9,6 +9,7 @@
 #include "breathalyzer.h"
 #include "photoresistor.h"
 #include "button.h"
+#include "rand.h"
 
 void initialize(void);
 void stepper_test(void);
@@ -18,6 +19,7 @@ void button_test(void);
 void servo_test(void);
 void breathalyzer_test(void);
 void mcp3008_test(void);
+void rand_test(void);
 
 #define LED1 GPIO_PIN16
 #define LED2 GPIO_PIN12
@@ -27,12 +29,15 @@ void main(void) {
     initialize();
     printf("Hello, world!\n");
 
+    // button_test();
+    // breathalyzer_test();
     // stepper_test();
-    stepper_laser_test();
-    valve_test();
+    // stepper_laser_test();
+    // valve_test();
     // button_test();
     //servo_test();
-    mcp3008_test();
+    rand_test();
+    // mcp3008_test();
 }
 
 void stepper_test() {
@@ -68,6 +73,7 @@ void valve_test() {
 void button_test() {
     while(1) {
       printf("Button Test Started\n");
+
       wait_for_press();
       printf("Button Pressed\n");
     }
@@ -97,6 +103,23 @@ void mcp3008_test() {
   while(1) {
     printf("Reading: %04d | %04d\n", mcp3008_read(0), mcp3008_read(1));
     timer_delay_ms(250);
+  }
+}
+
+void rand_test() {
+  int num_test = 0;
+  while (1) {
+    printf("TEST %d!!!!!\n", num_test++);
+    printf("Random number 1 under 100 is %d\n", rand_under(100));
+    printf("Random number 2 under 100 is %d\n", rand_under(100));
+    printf("Random number 3 under 100 is %d\n", rand_under(100));
+    printf("Random number 1 between 10 and 20 is %d\n", rand_between(10, 20));
+    printf("Random number 2 between 10 and 20 is %d\n", rand_between(10, 20));
+    printf("Random number 3 between 10 and 20 is %d\n", rand_between(10, 20));
+    char c = rand_char();
+    printf("Random char is number %d and char %c\n", c, c);
+    printf("\n\n");
+    timer_delay(2);
   }
 }
 

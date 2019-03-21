@@ -6,7 +6,7 @@
 #define DRUNK_THRESHOLD 80
 #define NUM_AVERAGE 20
 #define READ_TIME 5
-static unsigned int max_alc = 400;
+static unsigned int max_alc = 125;
 static unsigned int adc_channel;
 
 
