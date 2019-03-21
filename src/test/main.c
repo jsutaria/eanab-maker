@@ -21,8 +21,8 @@ void main(void) {
     initialize();
     printf("Hello, world!\n");
 
-    stepper_test();
-    // valve_test();
+    // stepper_test();
+    valve_test();
     // button_test();
     //servo_test();
 }

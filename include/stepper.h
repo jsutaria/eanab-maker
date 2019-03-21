@@ -9,8 +9,8 @@
 #define FORWARDS  1
 #define BACKWARDS 0
 
-#define STEPPER_STEP_PIN 21
-#define STEPPER_DIRECTION_PIN 20
+#define STEPPER_STEP_PIN 20
+#define STEPPER_DIRECTION_PIN 21
 
 void stepper_init(unsigned int direction_pin, unsigned int step_pin);
 
