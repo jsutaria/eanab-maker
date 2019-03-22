@@ -9,6 +9,7 @@
 #include "stepper.h"
 #include "breathalyzer.h"
 #include "valve.h"
+#include "button.h"
 #include "storage.h"
 #include "communicator.h"
 #include "rand.h"
@@ -81,5 +82,7 @@ void main(void)
         turn_on_valves(ingredients);
         step_backwards();
         printf("Your drink is ready to go! Enjoy!\n");
+
+        magstripe_reset(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
     }
 }

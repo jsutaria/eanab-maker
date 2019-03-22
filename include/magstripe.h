@@ -52,6 +52,8 @@ typedef enum {
  */
 void magstripe_init(unsigned int clock_gpio, unsigned int data_gpio);
 
+void magstripe_reset(unsigned int clock_gpio, unsigned int data_gpio);
+
 /**
  * Blocks until a card is swiped, then returns a `magstripe_card_t` object that
  * contains the contents of the card.
