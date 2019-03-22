@@ -31,10 +31,10 @@ void main(void) {
     // breathalyzer_test();
     // stepper_test();
     // stepper_laser_test();
-    // valve_test();
+    valve_test();
     // button_test();
     //servo_test();
-    rand_test();
+    // rand_test();
     // mcp3008_test();
 }
 
@@ -58,13 +58,21 @@ void stepper_laser_test() {
 
 void valve_test() {
     printf("Valves ---");
+    int i = 0;
+    unsigned int j = 250;
+    while(1) {
+      valve_on(i % 4);
+      timer_delay_ms(j--);
+      valve_off(i % 4);
+      printf("%d", i++);
+    }
     while (1) {
       printf("\b\b\bOn ");
       all_valves_on();
-      timer_delay(1);
+      timer_delay_ms(500);
       printf("\b\b\bOff");
       all_valves_off();
-      timer_delay(1);
+      timer_delay_ms(500);
     }
 }
 

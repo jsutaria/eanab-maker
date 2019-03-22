@@ -53,14 +53,15 @@ unsigned int flip_coin() {
 }
 
 storage_ingredients_t * generate_random_mix(void) {
-    storage_ingredients_t *ingredients = (storage_ingredients_t *)malloc(4);
+    storage_ingredients_t *ingredients = (storage_ingredients_t *) malloc(4);
     unsigned int total = 0;
     for (int i = 0; i < 4; i++) {
       ingredients[i] = rand_char();
+      printf("%c", ingredients[i]);
       total += ingredients[i];
     }
     for (int i = 0; i < 4; i++) {
-      ingredients[i] = ingredients[i] / total * 255;
+      ingredients[i] = ingredients[i] * 255 / total ;
     }
 
     return ingredients;
