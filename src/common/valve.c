@@ -6,12 +6,7 @@
 #include "gpio.h"
 #include "timer.h"
 
-<<<<<<< HEAD
-#define TIME_DELAY 50
-=======
-#define TIME_TOTAL 8000
 #define TIME_DELAY 150
->>>>>>> 2155ded34d8d21a174eb323b766bd4f01fadd2b2
 
 static unsigned int valves[4];
 
