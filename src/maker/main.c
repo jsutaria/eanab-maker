@@ -46,8 +46,7 @@ void main(void)
 
         if (detect_drunk()) {
           printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
-        } else {
-          printf("Sweet, you're good to go!\n");
+        } else printf("Sweet, you're good to go!\n");
 
           // Servo
           timer_delay(1);
