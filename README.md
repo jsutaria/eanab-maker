@@ -13,10 +13,10 @@ Both our concierge and our maker use a PS/2 protocol magstripe to read your Stan
 ### ESP32
 We use an ESP-32 on both the concierge and the maker to communicate drink preferences from one to another, so the maker can retrieve the appropriate drink when you swipe the card.
 
-###TAJ Protocol
+### TAJ Protocol
 The fittingly-named TAJ (Theo, Ankush, Jainil) protocol is used to communicate preferences from the ESP32 to the Raspberry Pi. It's not just typical UART!
 
-###Button
+### Button
 We use a pretty simple pull-up resistor and button to register when you're ready to be breathalyzed.
 
 ### Breathalyzer
@@ -38,11 +38,11 @@ Our valves are solenoids that open when a 12V current is wired to them. We use a
 Our config didn't look cool enough as is, so we decided to give it some flair with some sick lighting.
 
 ## To Run
-For the concierge: run 'make install-c'
+For the concierge: run 'make install-c'  
 For the maker: run 'make install-m'
 
 ## Roles and Responsibilities
-We worked on a lot of the project together, but to break down some of the responsibilities.
-Theo: ESP32, TAJ protocol, magstripe, communication and storage of drink preferences
-Ankush: valve control, breathalyzer control, rand library, construction
-Jainil: stepper, photoresistor and laser, rand library, construction
+We worked on a lot of the project together, but to break down some of the responsibilities.  
+Theo: ESP32, TAJ protocol, magstripe, communication and storage of drink preferences  
+Ankush: valve control, breathalyzer control, rand library, construction  
+Jainil: stepper, photoresistor and laser, rand library, construction  
