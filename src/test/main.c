@@ -59,7 +59,7 @@ void stepper_laser_test() {
 void valve_test() {
     printf("Valves ---");
     int i = 0;
-    unsigned int j = 250;
+    unsigned int j = 5000;
     while(1) {
       valve_on(i % 4);
       timer_delay_ms(j--);

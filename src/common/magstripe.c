@@ -14,7 +14,7 @@ void magstripe_init(unsigned int clock_gpio, unsigned int data_gpio)
 
     printf("[magstripe] Sending magstripe reset...\n");
     ps2_write(clock_gpio, data_gpio, 0x02); // 0x02 = reset
-    for (int i = 0; i < 100; i++) ps2_write(clock_gpio, data_gpio, 0x00); // 0x00 data pad
+    // for (int i = 0; i < 100; i++) ps2_write(clock_gpio, data_gpio, 0x00); // 0x00 data pad
 
     printf("[magstripe] Sent reset, waiting for reset...\n");
     timer_delay_ms(1000);

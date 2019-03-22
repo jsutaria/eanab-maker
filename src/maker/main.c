@@ -5,6 +5,7 @@
 #include "magstripe.h"
 #include "interrupts.h"
 #include "malloc.h"
+#include "photoresistor.h"
 #include "stepper.h"
 #include "breathalyzer.h"
 #include "valve.h"
@@ -15,7 +16,10 @@
 void initialize(void) {
   timer_init();
   uart_init();
+  valves_init(VALVE_1_PIN, VALVE_2_PIN, VALVE_3_PIN, VALVE_4_PIN);
   magstripe_init(MAGSTRIPE_CLOCK, MAGSTRIPE_DATA);
+  stepper_init(STEPPER_DIRECTION_PIN, STEPPER_STEP_PIN);
+  photoresistor_init(PHOTORESISTOR_CHANNEL);
   storage_init();
   communicator_init(COMMUNICATOR_CLOCK, COMMUNICATOR_DATA, COMMUNICATOR_MODE_MAKER);
   interrupts_global_enable();
@@ -51,7 +55,6 @@ void main(void)
           printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
         } else printf("Sweet, you're good to go!\n");
 
-        // Servo
         timer_delay(1);
         printf("Dispensing the cup right now!\n");
         //servo_set_90();
@@ -68,6 +71,7 @@ void main(void)
         timer_delay(1);
         printf("Dispensing now!\n");
         turn_on_valves(ingredients);
+        step_backwards();
         printf("Your drink is ready to go! Enjoy!\n");
     }
 }
