@@ -48,15 +48,15 @@ void main(void)
         timer_delay_ms(500);
 
         if (detect_drunk()) {
-          printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
-        } else printf("Sweet, you're good to go!\n");
+            printf("Oops! Looks like you've had a bit too many EANABs for today ;). Try again next time!\n");
+        } else {
+            printf("Sweet, you're good to go!\n");
+        }
 
         // Servo
         timer_delay(1);
         printf("Dispensing the cup right now!\n");
-        //servo_set_90();
         timer_delay_ms(750);
-        //  servo_set_0();
 
         // Stepper
         timer_delay(1);
