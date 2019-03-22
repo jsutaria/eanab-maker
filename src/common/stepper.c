@@ -5,6 +5,7 @@
 #include "printf.h"
 
 static unsigned int pin_step, pin_direction;
+#define THRESHOLD 1.25
 
 void stepper_init(unsigned int direction_pin, unsigned int step_pin) {
   pin_direction = direction_pin;
@@ -56,7 +57,7 @@ void step_until_laser() {
     stepper_set_direction(FORWARDS);
     int start_val = photoresistor_read();
     int i;
-    for(i = 0; photoresistor_read() < start_val * 1.5; i++) stepper_step(1);
+    for(i = 0; photoresistor_read() < start_val * THRESHOLD; i++) stepper_step(1);
     step_amount = i;
 }
 

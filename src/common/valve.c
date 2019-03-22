@@ -8,6 +8,7 @@
 
 #define TIME_TOTAL 8000
 #define TIME_DELAY 150
+#define MIN_TIME 1
 
 static unsigned int valves[4];
 
@@ -51,12 +52,18 @@ void turn_on_valves(storage_ingredients_t *quantities) {
 
       printf("Valve state: %d/%d/%d/%d\n", time_1, time_2, time_3, time_4);
 
+      // Decrement time step
+      if (time_1 >= MIN_TIME) time_1--;
+      if (time_2 >= MIN_TIME) time_2--;
+      if (time_3 >= MIN_TIME) time_3--;
+      if (time_4 >= MIN_TIME) time_4--;
+
       // Turn off valves once they have reached a value of "1" or less,
       // since this means they have been fully exhausted.
-      if (--time_1 <= 1) valve_off(VALVE_1);
-      if (--time_2 <= 1) valve_off(VALVE_2);
-      if (--time_3 <= 1) valve_off(VALVE_3);
-      if (--time_4 <= 1) valve_off(VALVE_4);
+      if (time_1 <= MIN_TIME) valve_off(VALVE_1);
+      if (time_2 <= MIN_TIME) valve_off(VALVE_2);
+      if (time_3 <= MIN_TIME) valve_off(VALVE_3);
+      if (time_4 <= MIN_TIME) valve_off(VALVE_4);
 
       timer_delay_ms(TIME_DELAY);
   }
