@@ -46,3 +46,5 @@ We worked on a lot of the project together, but to break down some of the respon
 Theo: ESP32, TAJ protocol, magstripe, communication and storage of drink preferences  
 Ankush: valve control, breathalyzer control, rand library, construction  
 Jainil: stepper, photoresistor and laser, rand library, construction  
+
+![Image of EANABMaker](https://imgur.com/a/2BC8jMd)
