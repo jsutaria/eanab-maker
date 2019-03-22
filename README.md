@@ -14,7 +14,7 @@ Both our concierge and our maker use a PS/2 protocol magstripe to read your Stan
 We use an ESP-32 on both the concierge and the maker to communicate drink preferences from one to another, so the maker can retrieve the appropriate drink when you swipe the card.
 
 ### TAJ Protocol
-The fittingly-named TAJ (Theo, Ankush, Jainil) protocol is used to communicate preferences from the ESP32 to the Raspberry Pi. It's not just typical UART!
+The fittingly-named TAJ (Theo, Ankush, Jainil) protocol is used to communicate preferences from the ESP32 to the Raspberry Pi. It's not just typical UART! We use our own modified protocol (based on PS/2) that can run over two aribitrary GPIO pins so that computer<->pi UART can run concurrently.
 
 ### Button
 We use a pretty simple pull-up resistor and button to register when you're ready to be breathalyzed.
