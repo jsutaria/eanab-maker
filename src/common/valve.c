@@ -7,7 +7,7 @@
 #include "timer.h"
 
 #define TIME_TOTAL 8000
-#define TIME_DELAY 50
+#define TIME_DELAY 150
 
 static unsigned int valves[4];
 
