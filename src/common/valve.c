@@ -74,7 +74,7 @@ void turn_on_valves(storage_ingredients_t *quantities) {
 
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
 
-      printf("Valve state: %d/%d/%d/%d", time_1, time_2, time_3, time_4);
+      printf("Valve state: %d/%d/%d/%d\n", time_1, time_2, time_3, time_4);
 
       // Turn off valves once they have reached a value of "1" or less,
       // since this means they have been fully exhausted.
