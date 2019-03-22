@@ -6,7 +6,6 @@
 #include "gpio.h"
 #include "timer.h"
 
-#define TIME_TOTAL 8000
 #define TIME_DELAY 50
 
 static unsigned int valves[4];
@@ -46,10 +45,10 @@ void turn_on_valves(storage_ingredients_t *quantities) {
   int time_4 = quantities[3];
 
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
-    // printf("Time 1: %d\n", time_1);
-    // printf("Time 2: %d\n", time_2);
-    // printf("Time 3: %d\n", time_3);
-    // printf("Time 4: %d\n", time_4);
+    printf("Time 1: %d\n", time_1);
+    printf("Time 2: %d\n", time_2);
+    printf("Time 3: %d\n", time_3);
+    printf("Time 4: %d\n", time_4);
 
     if (--time_1 <= 1) valve_off(VALVE_1);
     if (--time_2 <= 1) valve_off(VALVE_2);
