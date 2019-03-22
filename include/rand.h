@@ -1,4 +1,5 @@
-#include "rand.h"
+#ifndef RAND_H
+#define RAND_H
 #include "storage.h"
 #include "malloc.h"
 
@@ -13,3 +14,4 @@ unsigned char rand_char();
 unsigned int flip_coin();
 
 storage_ingredients_t * generate_random_mix(void);
+#endif
