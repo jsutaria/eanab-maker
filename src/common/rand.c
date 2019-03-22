@@ -72,7 +72,6 @@ storage_ingredients_t * generate_random_mix(void) {
     unsigned int total = 0;
     for (int i = 0; i < 4; i++) {
       ingredients[i] = rand_char();
-      printf("%c", ingredients[i]);
       total += ingredients[i];
     }
     for (int i = 0; i < 4; i++) {

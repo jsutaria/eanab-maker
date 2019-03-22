@@ -56,7 +56,7 @@ void valve_on(int valve) {
  * @param valve number of valve
  */
 void valve_off(int valve) {
-    gpio_write(valves[valve], OFF);å
+    gpio_write(valves[valve], OFF);
 }
 
 /**
