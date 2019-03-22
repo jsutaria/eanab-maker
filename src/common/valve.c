@@ -40,16 +40,16 @@ void valve_off(int valve) {
 
 void turn_on_valves(storage_ingredients_t *quantities) {
   all_valves_on();
-  unsigned int time_1 = quantities[0];
-  unsigned int time_2 = quantities[1];
-  unsigned int time_3 = quantities[2];
-  unsigned int time_4 = quantities[3];
+  int time_1 = quantities[0];
+  int time_2 = quantities[1];
+  int time_3 = quantities[2];
+  int time_4 = quantities[3];
 
   while (time_1 > 0 || time_2 > 0 || time_3 > 0 || time_4 > 0) {
-    printf("Time 1: %d\n", time_1);
-    printf("Time 2: %d\n", time_2);
-    printf("Time 3: %d\n", time_3);
-    printf("Time 4: %d\n", time_4);
+    // printf("Time 1: %d\n", time_1);
+    // printf("Time 2: %d\n", time_2);
+    // printf("Time 3: %d\n", time_3);
+    // printf("Time 4: %d\n", time_4);
 
     if (--time_1 <= 1) valve_off(VALVE_1);
     if (--time_2 <= 1) valve_off(VALVE_2);
