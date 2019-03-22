@@ -11,6 +11,13 @@
 
 static unsigned int valves[4];
 
+/**
+ * Initialize valves
+ * @param pin_1 gpio to control valve1
+ * @param pin_2 gpio to control valve2
+ * @param pin_3 gpio to control valve3
+ * @param pin_4 gpio to control valve4
+ */
 void valves_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, unsigned int pin_4) {
     valves[0] = pin_1;
     valves[1] = pin_2;
@@ -22,22 +29,40 @@ void valves_init(unsigned int pin_1, unsigned int pin_2, unsigned int pin_3, uns
 		}
 }
 
+/**
+ * Turn on all valves
+ */
 void all_valves_on() {
     for(int valve = 0; valve < 4; valve++) valve_on(valve);
 }
 
+/**
+ * Turn all valves off
+ */
 void all_valves_off() {
     for(int valve = 0; valve < 4; valve++) valve_off(valve);
 }
 
+/**
+ * Turns individual valve on
+ * @param valve number of valve
+ */
 void valve_on(int valve) {
     gpio_write(valves[valve], ON);
 }
 
+/**
+ * Turns individual valve off
+ * @param valve number of valve
+ */
 void valve_off(int valve) {
-    gpio_write(valves[valve], OFF);
+    gpio_write(valves[valve], OFF);å
 }
 
+/**
+ * Turns on the valves for the correct amount to output the right drink
+ * @param quantities array denoting ingredient concentrations
+ */
 void turn_on_valves(storage_ingredients_t *quantities) {
   // Initially turn on all values
   all_valves_on();

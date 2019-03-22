@@ -5,6 +5,11 @@
 
 static unsigned int writing_data_line = 0;
 
+/**
+ * Wakes up the PS/2 and initializes the GPIOs
+ * @param clock_gpio gpio pin for clock
+ * @param data_gpio  gpio pin for data
+ */
 void ps2_wake(unsigned int clock_gpio, unsigned int data_gpio)
 {
     gpio_set_function(clock_gpio, GPIO_FUNC_OUTPUT);
@@ -19,6 +24,12 @@ void ps2_wake(unsigned int clock_gpio, unsigned int data_gpio)
     timer_delay_ms(10);
 }
 
+/**
+ * Sends data over the ps/2 protocol
+ * @param clock_gpio clock gpio pin
+ * @param data_gpio  data gpio pin
+ * @param data       data to write
+ */
 void ps2_write(unsigned int clock_gpio, unsigned int data_gpio, unsigned char data)
 {
     // Mark line as writing so we disregard interrupts
